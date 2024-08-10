@@ -1,0 +1,20 @@
+title: "Sergio Berdiales"
+description: "Mi sitio web personal"
+baseurl: ""
+url: "https://sergioberdiales.github.io"
+theme: minimal-mistakes-jekyll
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "single"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
