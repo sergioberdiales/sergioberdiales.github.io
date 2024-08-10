@@ -9,7 +9,7 @@ De aquí en adelante esto solo puede mejorar.
 
 Os dejo una foto de unos gorriones.
 
-![Unos gorriones](assets/images/2024-08-11_gorriones_IMG_1377.jpg)
+![Unos gorriones](/assets/images/2024-08-11_gorriones_IMG_1377.jpg)
 
 La IA, vaya flipe.
 
