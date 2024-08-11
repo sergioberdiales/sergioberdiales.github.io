@@ -325,8 +325,3 @@ defaults:
       related: true
       
       
-      # Navigation Links
-header:
-  nav:
-    - text: "Inicio"
-      url: "/"
