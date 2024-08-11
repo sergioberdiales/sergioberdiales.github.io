@@ -4,6 +4,8 @@ title:  "Mi primera entrada"
 date:   2024-08-11 00:41:58 +0200
 categories: autoayuda
 ---
+## Mi primera entrada
+
 Esta es mi primera entrada en Github Pages. ¿Impresionante, eh?
 De aquí en adelante esto solo puede mejorar.
 
