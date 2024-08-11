@@ -17,11 +17,11 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 # Site Settings
 locale                   : "es-ES"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Sergio Berdiales"
+title                    : "Datos, fotos y otras cosas"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Sergio Berdiales"
-description              : "Datos, fotos y otras cosas"
+description              : "Esta es mi pagína personal, donde iré dejando notas de cosas que me interesan."
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -323,3 +323,10 @@ defaults:
       comments: # true
       share: true
       related: true
+      
+      
+      # Navigation Links
+header:
+  nav:
+    - text: "Inicio"
+      url: "/"

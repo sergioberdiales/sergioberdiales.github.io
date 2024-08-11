@@ -2,7 +2,7 @@
 layout: post
 title:  "Mi primera entrada"
 date:   2024-08-11 00:41:58 +0200
-categories: autoayuda
+categories: aprendiendo
 ---
 ## Mi primera entrada
 
