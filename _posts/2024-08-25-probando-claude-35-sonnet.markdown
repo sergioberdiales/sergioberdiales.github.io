@@ -11,8 +11,6 @@ Hace tiempo que disfruto de la versión Pro de ChatGpt de OpenAI. Y no hace much
 Hasta ayer no me animé a probar de forma sería este nuevo modelo para comprobar por mí mismo las bondades del nuevo modelo de Anthropic. Ayer tuve un ratito para ponerme con ello y puede decir que sí, que ahora mismo Sonnet 3.5 está claramente por delante del mejor modelo de OpenAI. Aunque no por la potencia del modelo, que en estos niveles me veo incapaz de decir gran cosa, sino por su interfaz de usuario, que con unos pequeños cambios, supera con creces la de ChatGpt, reduciendo la fricción a la hora de utilizar el chatbot y facilitando la iteración que suele implicar este tipo de procesos.
 
 
-![Interfaz de usuario de Claude 3.5 Sonnet](/assets/images/2024-08-25_164436_interfaz_usuario_claude.jpg)
-
 
 
 
