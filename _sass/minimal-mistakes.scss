@@ -35,3 +35,13 @@
 @import "minimal-mistakes/archive";
 @import "minimal-mistakes/sidebar";
 @import "minimal-mistakes/print";
+
+
+/* Personalización para centrar el contenido del post */
+.content-container {
+    max-width: 800px;  /* Ajusta este valor según lo necesites */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Opcional: un fondo blanco para el contenido */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Opcional: efecto de sombra */
+  }
