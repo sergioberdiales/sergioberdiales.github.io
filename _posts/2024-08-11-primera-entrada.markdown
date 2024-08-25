@@ -6,7 +6,7 @@ categories: aprendiendo
 ---
 ## Mi primera entrada
 
-PRUEBA Esta es mi primera entrada en Github Pages. ¿Impresionante, eh?
+Esta es mi primera entrada en Github Pages. ¿Impresionante, eh?
 De aquí en adelante esto solo puede mejorar.
 
 Os dejo una foto de unos gorriones.
