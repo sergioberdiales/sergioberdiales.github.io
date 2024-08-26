@@ -17,9 +17,10 @@ La mejora de la interfaz viene de algo tan sencillo como la de dividir verticalm
 
 Al final tuve que acabar la aplicación con la ayuda de ChatGpt porque el límite de la versión gratuita de Sonnet 3.5 no dio para mucho. Pero Sonnet me dejó una gran sabor de boca. A ver si OpenAI se pone las pilas y mejora este aspecto, que no parece algo tan difícil.
 
-Aquí dejo la aplicación. Creo quedó resultona, sobre todo para el poco tiempo que le pude dedicar.
+Aquí dejo la aplicación. Solo tienes que pinchar en la siguiente imagen. Creo que quedó resultona, sobre todo para el poco tiempo que le pude dedicar. 
 
-<iframe src="https://sergioberdiales.github.io/juegos/juego_multiplicacion/index.html" width="100%" height="500px" frameborder="0" style="max-width: 800px; margin: auto; display: block;" allowfullscreen></iframe>
+[![Juego de multiplicar](/assets/images/2024-08-26_212618_juego_multiplicar.jpg)](https://sergioberdiales.github.io/juegos/juego_multiplicacion/index.html)
+
 
 
 
