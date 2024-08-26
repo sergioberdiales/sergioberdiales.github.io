@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title:  "Probando Claude 3.5 Sonnet"
 date:   2024-08-25 16:27:00 +0000
 categories: aprendiendo
