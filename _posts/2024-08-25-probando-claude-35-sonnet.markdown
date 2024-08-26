@@ -11,7 +11,7 @@ El otro día se me ocurrió hacer una pequeña aplicación web para que mi hija 
 
 Y es que desde que este modelo apareció a finales de junio pasado, se dice que es el mejor modelo del mercado, por delante de ChatGpt 4o. 
 
-No sé decir si Sonnet es superior o no que ChatGpt 4o en términos de potencia o rendimiento, pero lo que está clarísimo es que la interfaz de Claude 3.5 Sonnet es muchísimo mejor. Y eso es muy importante.
+No sé decir si Sonnet es superior o no a ChatGpt 4o en términos de potencia o rendimiento, pero lo que está clarísimo es que la interfaz de Claude 3.5 Sonnet es muchísimo mejor. Y eso es muy importante.
 
 La mejora de la interfaz viene de algo tan sencillo como la de dividir verticalmente la pantalla en dos. A la izquierda tenemos nuestros prompts y las respuestas. Y a la derecha podemos ver el código resultante y, aquí es donde va la novedad importante, la previsualización del resultado final. En este caso podía ver el aspecto de la aplicación según se iba construyendo, lo que no se puede hacer con ChatGpt. Cuando hago este tipo de cosas con ChatGpt, lo que tengo que ir haciendo es copiar el código resultante, pegarlo en un archivo en local y ejecutarlo en un entorno compatible, lo que dispara la fricción con la aplicación y dificulta la iteración, básica en este tipo de procesos.
 
