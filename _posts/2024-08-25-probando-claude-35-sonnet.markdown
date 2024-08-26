@@ -7,7 +7,9 @@ categories: aprendiendo
 
 El otro día se me ocurrió hacer una pequeña aplicación web para que mi hija practicase de forma divertida la multiplicación. Y aproveché para probar el nuevo modelo de Anthropic, Claude 3.5 Sonnet. 
 
-Desde que este modelo apareció a finales de junio pasado, se dice que es el modelo puntero, por delante del modelo más potente de OpenAI. 
+[![Claude 3.5 Sonnet](/assets/images/2024-08-25 164436_claude_35_sonnet.png)](https://www.anthropic.com/news/claude-3-5-sonnet)
+
+Y es que desde que este modelo apareció a finales de junio pasado, se dice que es el mejor modelo del mercado, por delante de ChatGpt 4o. 
 
 No sé decir si Sonnet es superior o no que ChatGpt 4o en términos de potencia o rendimiento, pero lo que está clarísimo es que la interfaz de Claude 3.5 Sonnet es muchísimo mejor. Y eso es muy importante.
 
