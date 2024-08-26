@@ -80,9 +80,14 @@ th, td {
 }
 th {
     background-color: #f5f8fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 #ranking-screen {
     display: none;
+    max-height: 80vh; /* Limitar la altura máxima del ranking */
+    overflow-y: auto; /* Habilitar scroll si el contenido excede la altura */
 }
 #filters {
     margin: 10px 0;
