@@ -1,3 +1,7 @@
 source "https://rubygems.org"
-gemspec
+
+# Comentamos o eliminamos esta línea
+# gemspec
+
 gem "minimal-mistakes-jekyll"
+
