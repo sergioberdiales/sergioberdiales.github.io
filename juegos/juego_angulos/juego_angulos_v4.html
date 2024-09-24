@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ángulos Maestros</title>
+    <style>
+        /* Código CSS actualizado */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #14171a;
+            line-height: 1.3;
+            margin: 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1da1f2;
+        }
+        h2 {
+            font-size: 1.25em;
+            font-weight: normal;
+            margin-bottom: 20px;
+            color: #657786;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto 20px;
+            background-color: #f7f9fa;
+            max-width: 100%;
+            height: auto;
+        }
+        input, button {
+            font-size: 1em;
+            padding: 10px;
+            border: 1px solid #e1e8ed;
+            border-radius: 20px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            background-color: #1da1f2;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #1991db;
+        }
+        #message, #score, #lives, #marginInfo {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        #ranking {
+            margin-top: 20px;
+        }
+        #ranking h3 {
+            font-size: 1.5em;
+            color: #1da1f2;
+        }
+        #ranking ol {
+            padding-left: 20px;
+        }
+        #ranking li {
+            font-size: 1em;
+        }
+        .hidden {
+            display: none;
+        }
+        /* Media query para pantallas pequeñas */
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            input, button {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            #message, #score, #lives, #marginInfo {
+                font-size: 0.9em;
+            }
+            #ranking h3 {
+                font-size: 1.3em;
+            }
+            #ranking li {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ángulos Maestros</h1>
+        <div id="headerMessage">
+            <h2>¡Demuestra tu destreza estimando ángulos!</h2>
+        </div>
+        <div id="nameInput">
+            <input type="text" id="playerName" placeholder="Ingresa tu nombre">
+            <button onclick="startGame()">Empezar Juego</button>
+        </div>
+        <div id="gameArea" class="hidden">
+            <canvas id="angleCanvas"></canvas>
+            <div>
+                <input type="number" id="guessInput" placeholder="Ingresa los grados">
+                <button onclick="checkGuess()">Comprobar</button>
+            </div>
+            <p id="lives">Vidas: 1</p>
+            <p id="score">Puntuación: 0</p>
+            <p id="marginInfo"></p>
+            <p id="message"></p>
+        </div>
+        <div id="endGame" class="hidden">
+            <p id="finalScore"></p>
+            <p id="learningPill"></p>
+            <p id="playerRank"></p>
+            <!-- Botón "Jugar de nuevo" eliminado de aquí -->
+        </div>
+        <div id="ranking" class="hidden">
+            <h3>Top 5 Puntuaciones</h3>
+            <ol id="rankingList"></ol>
+            <button onclick="playAgain()">Jugar de nuevo</button>
+        </div>
+    </div>
+
+    <script>
+        /* Código JavaScript con ajustes en resizeCanvas() */
+        const canvas = document.getElementById('angleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let currentAngle = 0;
+        let targetAngle = 0;
+        let score = 0;
+        let lives = 1;
+        let animationId = null;
+        let playerName = '';
+        let ranking = [];
+
+        const concepts = [
+            "Los ángulos menores de 90 grados se denominan agudos.",
+            "Los ángulos de 90 grados se llaman ángulos rectos.",
+            "Los ángulos entre 90 y 180 grados se llaman obtusos.",
+            "Un ángulo de 180 grados se llama ángulo llano.",
+            "Los ángulos mayores de 180 grados se llaman cóncavos.",
+            "La suma de los ángulos internos de un triángulo es siempre 180 grados.",
+            "Dos ángulos son complementarios si suman 90 grados.",
+            "Dos ángulos son suplementarios si suman 180 grados.",
+            "Un ángulo de 360 grados completa una vuelta entera.",
+            "Los ángulos opuestos por el vértice son siempre iguales."
+        ];
+
+        function drawAngle() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar ejes
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, canvas.height);
+            ctx.strokeStyle = '#e1e8ed';
+            ctx.stroke();
+
+            // Dibujar línea fija (eje X positivo)
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + (centerX - 20), centerY);
+            ctx.strokeStyle = '#1da1f2';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Dibujar línea del ángulo
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            let radius = centerX - 20;
+            let endX = centerX + Math.cos(currentAngle) * radius;
+            let endY = centerY - Math.sin(currentAngle) * radius;
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = '#1da1f2';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Dibujar la circunferencia pequeña completa
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#657786';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+
+        function animate() {
+            if (Math.abs(currentAngle - targetAngle) > 0.01) {
+                currentAngle += (targetAngle - currentAngle) * 0.1;
+                drawAngle();
+                animationId = requestAnimationFrame(animate);
+            } else {
+                currentAngle = targetAngle;
+                drawAngle();
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        function generateAngle() {
+            targetAngle = Math.random() * 2 * Math.PI;
+            animate();
+        }
+
+        function getAllowedMargin(score) {
+            if (score < 5) return 5;
+            else if (score < 10) return 4;
+            else if (score < 15) return 3;
+            else if (score < 20) return 2;
+            else return 1;
+        }
+
+        function updateMarginInfo() {
+            const allowedMargin = getAllowedMargin(score);
+            document.getElementById('marginInfo').textContent = `Margen permitido: ±${allowedMargin}°`;
+        }
+
+        function checkGuess() {
+            let guess = parseInt(document.getElementById('guessInput').value);
+            let actualDegrees = Math.round(targetAngle * 180 / Math.PI) % 360;
+            guess = ((guess % 360) + 360) % 360; // Normalizar la suposición
+
+            let difference = Math.abs(guess - actualDegrees);
+            if (difference > 180) {
+                difference = 360 - difference;
+            }
+
+            const allowedMargin = getAllowedMargin(score);
+
+            if (difference === 0) {
+                // Acierto exacto
+                lives++;
+                score++;
+                document.getElementById('lives').textContent = `Vidas: ${lives}`;
+                document.getElementById('score').textContent = `Puntuación: ${score}`;
+                document.getElementById('message').textContent = `¡Lo has clavado! ¡Tienes una vida más!`;
+                updateMarginInfo();
+                document.getElementById('guessInput').value = '';
+                generateAngle();
+            } else if (difference <= allowedMargin) {
+                // Acierto dentro del margen permitido
+                score++;
+                document.getElementById('score').textContent = `Puntuación: ${score}`;
+                document.getElementById('message').textContent = `¡Correcto! Tu respuesta: ${guess}°. Ángulo real: ${actualDegrees}°. Diferencia: ${difference}°. Siguiente ángulo.`;
+                updateMarginInfo();
+                document.getElementById('guessInput').value = '';
+                generateAngle();
+            } else {
+                // Respuesta incorrecta
+                lives--;
+                if (lives <= 0) {
+                    document.getElementById('message').textContent = `Incorrecto. Tu respuesta: ${guess}°. Ángulo real: ${actualDegrees}°. Te has equivocado por ${difference}°. Has perdido.`;
+                    endGame();
+                } else {
+                    document.getElementById('lives').textContent = `Vidas: ${lives}`;
+                    document.getElementById('message').textContent = `Incorrecto. Tu respuesta: ${guess}°. Ángulo real: ${actualDegrees}°. Te has equivocado por ${difference}°. Te queda(n) ${lives} vida(s).`;
+                    document.getElementById('guessInput').value = '';
+                    generateAngle();
+                }
+            }
+
+            document.getElementById('guessInput').focus();
+        }
+
+        function startGame() {
+            playerName = document.getElementById('playerName').value.trim() || 'Anónimo';
+            document.getElementById('nameInput').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            document.getElementById('headerMessage').classList.remove('hidden');
+            score = 0;
+            lives = 1;
+            document.getElementById('score').textContent = 'Puntuación: 0';
+            document.getElementById('lives').textContent = `Vidas: ${lives}`;
+            updateMarginInfo();
+            document.getElementById('message').textContent = '';
+            document.getElementById('guessInput').disabled = false;
+            document.getElementById('guessInput').value = '';
+            generateAngle();
+            document.getElementById('guessInput').focus();
+        }
+
+        function endGame() {
+            const actualDegrees = Math.round(targetAngle * 180 / Math.PI) % 360;
+            const randomConcept = concepts[Math.floor(Math.random() * concepts.length)];
+            document.getElementById('guessInput').disabled = true;
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('endGame').classList.remove('hidden');
+            document.getElementById('headerMessage').classList.add('hidden');
+            document.getElementById('finalScore').textContent = `Puntuación final: ${score}`;
+            document.getElementById('learningPill').textContent = `¿Sabías que...? ${randomConcept}`;
+            updateRanking();
+            showPlayerRank();
+            showRanking();
+        }
+
+        function playAgain() {
+            document.getElementById('endGame').classList.add('hidden');
+            document.getElementById('ranking').classList.add('hidden');
+            document.getElementById('nameInput').classList.remove('hidden');
+            document.getElementById('playerName').value = playerName;
+            document.getElementById('headerMessage').classList.remove('hidden');
+            document.getElementById('playerName').focus();
+
+            // Mostrar el ranking actualizado
+            displayRanking();
+        }
+
+        function showRanking() {
+            document.getElementById('ranking').classList.remove('hidden');
+            displayRanking();
+        }
+
+        function updateRanking() {
+            ranking.push({name: playerName, score: score});
+            ranking.sort((a, b) => b.score - a.score);
+            ranking = ranking.slice(0, 5);
+            localStorage.setItem('angleGameRanking', JSON.stringify(ranking));
+        }
+
+        function showPlayerRank() {
+            const playerRank = ranking.findIndex(entry => entry.name === playerName && entry.score === score) + 1;
+            let rankMessage = "";
+
+            if (ranking.length === 1) {
+                // Solo hay una puntuación en el ranking
+                rankMessage = `¡Eres el primero en el ranking! Claro, también eres el único... ¡Invita a tus amigos a jugar!`;
+            } else if (playerRank > 0 && playerRank <= 5) {
+                rankMessage = `¡Felicidades! Te has colocado en la posición #${playerRank} del ranking.`;
+            } else {
+                rankMessage = "¡Buen intento! Sigue practicando para entrar en el top 5.";
+            }
+            document.getElementById('playerRank').textContent = rankMessage;
+        }
+
+        function displayRanking() {
+            const rankingList = document.getElementById('rankingList');
+            rankingList.innerHTML = '';
+            ranking.forEach(entry => {
+                const li = document.createElement('li');
+                li.textContent = `${entry.name}: ${entry.score}`;
+                rankingList.appendChild(li);
+            });
+        }
+
+        document.getElementById('guessInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkGuess();
+            }
+        });
+
+        document.getElementById('playerName').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                startGame();
+            }
+        });
+
+        // Enfocar el campo de nombre y cargar el ranking al cargar la página
+        window.onload = function() {
+            document.getElementById('playerName').focus();
+
+            // Cargar el ranking desde localStorage
+            const storedRanking = localStorage.getItem('angleGameRanking');
+            if (storedRanking) {
+                ranking = JSON.parse(storedRanking);
+            }
+
+            resizeCanvas();
+        };
+
+        // Ajustar el tamaño del canvas al cambiar el tamaño de la ventana
+        window.addEventListener('resize', resizeCanvas);
+
+        function resizeCanvas() {
+            const containerWidth = document.querySelector('.container').clientWidth;
+            const maxCanvasSize = 400; // Tamaño máximo del canvas
+            const canvasSize = Math.min(containerWidth * 0.9, maxCanvasSize);
+            canvas.width = canvasSize;
+            canvas.height = canvasSize; // Mantener el canvas cuadrado
+            drawAngle(); // Redibujar el ángulo después de cambiar el tamaño
+        }
+
+        // Mostrar un concepto aleatorio cada 30 segundos
+        setInterval(() => {
+            const randomConcept = concepts[Math.floor(Math.random() * concepts.length)];
+            document.getElementById('message').textContent = `Recuerda: ${randomConcept}`;
+        }, 30000);
+    </script>
+</body>
+</html>
