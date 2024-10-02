@@ -5,8 +5,6 @@ date:   2024-10-01 21:06:00 +0000
 categories: aprendiendo
 ---
 
-## Automatización de Tuits con IA
-
 Este fin de semana me animé a experimentar un poco con algunas APIs y terminé construyendo un pequeño sistema que automatiza la creación y publicación de tuits. La idea era aprender y, de paso, mostrar cómo ahora mismo, con las nuevas herramientas de IA generativa, cualquiera puede crear cosas que hace nada eran imposibles o muy costosas en tiempo.
 
 Mi idea inicial era, con la ayuda de ChatGPT, automatizar un resumen de los tuits de algún tuitero al que sigo, pero el modo de acceso gratuito a la API de Twitter no te lo permite. Actualmente solo te deja consultar la información de tu perfil o publicar tuits.
@@ -14,14 +12,18 @@ Mi idea inicial era, con la ayuda de ChatGPT, automatizar un resumen de los tuit
 Así que le planteé a ChatGPT construir un código en Python que hiciese lo siguiente:
 
 - Buscar noticias recientes sobre **OpenAI**.
-- Generar un tuit atractivo, breve y con hashtags que se ajustasen al tema usando la API de ChatGPT.
-- Publicar el tuit generado por ChatGPT con la API de Twitter.
+- **Generar un tuit** atractivo, breve y con hashtags que se ajustasen al tema usando la API de ChatGPT.
+- **Publicar el tuit** generado por ChatGPT con la API de Twitter.
+
+[![Tuit generado por ChatGPT](/assets/images/2024-10-02_215604_tuit_automatizado.jpg)](https://x.com/SergioBerdiales/status/1841566950050123868)
 
 A la vez le pedí que me sugiriera formas de hacerlo fácil y sin costo. Así fue cómo, por ejemplo, me propuso usar el "feed" RSS de Google News para recuperar alguna noticia actual sobre **OpenAI** o utilizar **Bitly** para acortar los enlaces. ¡Grandes aportes!
 
 A partir de ahí, la creación del código fue un proceso iterativo de prueba y error, con muy pocos errores por parte de ChatGPT, por cierto.
 
-Dejo por aquí el código Python final. 
+Una gozada. El ratio esfuerzo / resultado cada vez es más pequeño. Algunos que saben de esto dicen que en un futuro no habrá ni aplicaciones. Interaccionaremos con una capa de IA que en tiempo real irá generando todo lo que deseemos. Fascinante e inquietante a la vez. 
+
+Dejo por aquí el código Python final para los curiosos.
 
 ### Código Python
 
@@ -71,7 +73,7 @@ prompt = (
 )
 
 response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4o-mini",
     messages=[{"role": "user", "content": prompt}],
     max_tokens=50,
     temperature=0.7
