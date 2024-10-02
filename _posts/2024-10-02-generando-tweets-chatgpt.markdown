@@ -99,14 +99,7 @@ except TweepyException as e:
     if e.response is not None and e.response.text is not None:
         print(f'Detalles del error: {e.response.text}')
 
-
-
-
-[![Claude 3.5 Sonnet](/assets/images/2024-08-25 164436_claude_35_sonnet.png)](https://www.anthropic.com/news/claude-3-5-sonnet)
-
-
-[![Juego de multiplicar](/assets/images/2024-08-26_212618_juego_multiplicar.jpg)](https://sergioberdiales.github.io/juegos/juego_multiplicacion/index.html)
-
+```
 
 
 
