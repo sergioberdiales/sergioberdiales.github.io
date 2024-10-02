@@ -1,7 +1,7 @@
 ---
 layout: single
 title:  "Automatizando tuits con ChatGPT"
-date:   2024-10-02 21:06:00 +0000
+date:   2024-10-01 21:06:00 +0000
 categories: aprendiendo
 ---
 
