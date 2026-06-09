@@ -11,8 +11,8 @@
       content="Super Félix Bro, un pequeño homenaje jugable con destino a Cimavilla."
     />
     <title>Super Félix Bro</title>
-    <script type="module" crossorigin src="/super-felix-bro/assets/index-w4Icy1Cs.js"></script>
-    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-CjYrNjbd.css">
+    <script type="module" crossorigin src="/super-felix-bro/assets/index-B4VLzrYC.js"></script>
+    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-3iIRg7Vn.css">
   </head>
   <body>
     <main class="page-shell">
@@ -41,6 +41,27 @@
         >
           ACTIVAR SONIDO
         </button>
+        <button
+          class="pause-toggle"
+          type="button"
+          data-pause-toggle
+          aria-label="Pausar el juego"
+          aria-expanded="false"
+        >
+          PAUSA
+        </button>
+        <section
+          class="pause-overlay"
+          data-pause-overlay
+          aria-label="Juego en pausa"
+          hidden
+        >
+          <div class="pause-panel">
+            <h2>PAUSA</h2>
+            <button type="button" data-pause-continue>CONTINUAR</button>
+            <button type="button" data-pause-restart>REINICIAR NIVEL</button>
+          </div>
+        </section>
         <section class="touch-controls" aria-label="Controles táctiles">
           <div class="touch-controls__directions">
             <button
