@@ -11,8 +11,8 @@
       content="Super Félix Bro, un pequeño homenaje jugable con destino a Cimavilla."
     />
     <title>Super Félix Bro</title>
-    <script type="module" crossorigin src="/super-felix-bro/assets/index-Bc0NCqDm.js"></script>
-    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-CubKiz_r.css">
+    <script type="module" crossorigin src="/super-felix-bro/assets/index-CXM75R_r.js"></script>
+    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-BN50JtOn.css">
   </head>
   <body>
     <main class="page-shell">
@@ -30,45 +30,54 @@
       </header>
       <section class="game-frame" aria-label="Juego Super Félix Bro">
         <div id="game"></div>
-      </section>
-      <section class="touch-controls" aria-label="Controles táctiles">
-        <div class="touch-controls__directions">
-          <button
-            class="touch-button touch-button--direction"
-            type="button"
-            data-touch-control="left"
-            aria-label="Mover a la izquierda"
-          >
-            ←
-          </button>
-          <button
-            class="touch-button touch-button--direction"
-            type="button"
-            data-touch-control="right"
-            aria-label="Mover a la derecha"
-          >
-            →
-          </button>
-        </div>
-        <div class="touch-controls__actions">
-          <button
-            class="touch-button touch-button--throw"
-            type="button"
-            data-touch-control="throw"
-            data-action-button
-            aria-label="Acción"
-          >
-            SIDRAZO
-          </button>
-          <button
-            class="touch-button touch-button--jump"
-            type="button"
-            data-touch-control="jump"
-            aria-label="Saltar"
-          >
-            SALTAR
-          </button>
-        </div>
+        <button
+          class="sound-toggle"
+          type="button"
+          data-sound-toggle
+          aria-label="Activar sonido"
+          aria-pressed="false"
+        >
+          ACTIVAR SONIDO
+        </button>
+        <section class="touch-controls" aria-label="Controles táctiles">
+          <div class="touch-controls__directions">
+            <button
+              class="touch-button touch-button--direction"
+              type="button"
+              data-touch-control="left"
+              aria-label="Mover a la izquierda"
+            >
+              ←
+            </button>
+            <button
+              class="touch-button touch-button--direction"
+              type="button"
+              data-touch-control="right"
+              aria-label="Mover a la derecha"
+            >
+              →
+            </button>
+          </div>
+          <div class="touch-controls__actions">
+            <button
+              class="touch-button touch-button--throw"
+              type="button"
+              data-touch-control="throw"
+              data-action-button
+              aria-label="Acción"
+            >
+              SIDRAZO
+            </button>
+            <button
+              class="touch-button touch-button--jump"
+              type="button"
+              data-touch-control="jump"
+              aria-label="Saltar"
+            >
+              SALTAR
+            </button>
+          </div>
+        </section>
       </section>
       <p class="tip">
         Consejo: pisa bichos y cangrejos; esquiva oricios y regalos de gaviota.
