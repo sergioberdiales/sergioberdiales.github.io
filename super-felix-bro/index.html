@@ -11,8 +11,8 @@
       content="Super Félix Bro, un pequeño homenaje jugable con destino a Cimavilla."
     />
     <title>Super Félix Bro</title>
-    <script type="module" crossorigin src="/super-felix-bro/assets/index-CXM75R_r.js"></script>
-    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-BN50JtOn.css">
+    <script type="module" crossorigin src="/super-felix-bro/assets/index-w4Icy1Cs.js"></script>
+    <link rel="stylesheet" crossorigin href="/super-felix-bro/assets/index-CjYrNjbd.css">
   </head>
   <body>
     <main class="page-shell">
@@ -22,8 +22,10 @@
           <h1>Super Félix Bro</h1>
         </div>
         <div class="controls" aria-label="Controles del juego">
-          <span><kbd>A</kbd><kbd>D</kbd> moverse</span>
-          <span><kbd>W</kbd> / <kbd>↑</kbd> / <kbd>Espacio</kbd> saltar</span>
+          <span data-move-help><kbd>A</kbd><kbd>D</kbd> moverse</span>
+          <span data-jump-help>
+            <kbd>W</kbd> / <kbd>↑</kbd> / <kbd>Espacio</kbd> saltar
+          </span>
           <span data-action-help><kbd>X</kbd> acción</span>
           <span><kbd>M</kbd> sonido</span>
         </div>
@@ -42,7 +44,15 @@
         <section class="touch-controls" aria-label="Controles táctiles">
           <div class="touch-controls__directions">
             <button
-              class="touch-button touch-button--direction"
+              class="touch-button touch-button--direction touch-button--up"
+              type="button"
+              data-touch-control="up"
+              aria-label="Mover hacia arriba"
+            >
+              ↑
+            </button>
+            <button
+              class="touch-button touch-button--direction touch-button--left"
               type="button"
               data-touch-control="left"
               aria-label="Mover a la izquierda"
@@ -50,7 +60,15 @@
               ←
             </button>
             <button
-              class="touch-button touch-button--direction"
+              class="touch-button touch-button--direction touch-button--down"
+              type="button"
+              data-touch-control="down"
+              aria-label="Mover hacia abajo"
+            >
+              ↓
+            </button>
+            <button
+              class="touch-button touch-button--direction touch-button--right"
               type="button"
               data-touch-control="right"
               aria-label="Mover a la derecha"
