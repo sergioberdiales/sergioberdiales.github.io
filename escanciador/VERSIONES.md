@@ -39,3 +39,13 @@ Para exportar una versión sin alterar el trabajo actual:
 - `bash scripts/build-site.sh` prepara los archivos de publicación y extrae las copias históricas desde sus etiquetas Git.
 - Alojamiento público: GitHub Pages, repositorio `sergioberdiales/sergioberdiales.github.io`, carpeta `escanciador/`.
 - La copia de ChatGPT Sites se creó por error; no es el destino de publicación del proyecto.
+
+## v0.3.0 — Recuperación del sonido
+
+- Reintenta desbloquear Web Audio al levantar el dedo (`pointerup` y `touchend`), además del inicio del gesto.
+- Recupera contextos suspendidos, interrumpidos o cerrados. Solicita sesión de reproducción donde existe AudioSession.
+- Añade «Probar sonido», con confirmación breve y opción de reintento si falla la activación.
+- Sube ligeramente el volumen del chorro y versiona las URLs de JavaScript y CSS para evitar mezclas con archivos en caché.
+- Publicación principal y copia `/v3/`; `/v1/` y `/v2/` permanecen intactas.
+- Comprobado: pruebas de mecánica y de audio, activación real mediante clic en navegador (`running`), sin errores de consola. Pendiente de confirmar audición en el dispositivo del usuario.
+- Referencias: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/state y https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/User_activation
