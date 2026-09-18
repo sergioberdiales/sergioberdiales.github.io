@@ -60,3 +60,14 @@ Para exportar una versión sin alterar el trabajo actual:
 - Pruebas: 30 ciclos de audio, vuelta tras interrupción, recuperación de contexto y longitudes/orientación del codo en todo el recorrido.
 - No se ha podido revisar visualmente en navegador porque el Mac está bloqueado. La audición en el móvil del usuario sigue pendiente de confirmación.
 - Publicación: raíz y `/v4/`; las versiones anteriores permanecen intactas.
+
+## v0.6.0 — Brazo abierto hacia la derecha
+
+- El hombro, el codo y la mano quedan ordenados de izquierda a derecha en todo el recorrido. El brazo superior ya no cruza hacia el cuerpo.
+- Dos segmentos fijos de 90 unidades; vaso a altura 350 y recorrido aproximado 270–317 en un lienzo lógico de 400. El límite izquierdo también se calcula con un ángulo mínimo de apertura de 6 grados.
+- Posición inicial del vaso en 290; trayectoria del chorro ajustada al nuevo alcance.
+- Comprobado: longitudes constantes y ambos segmentos hacia la derecha en todo el recorrido; tres culines conservan las 600 gotas y permiten aciertos y fallos; pruebas de audio pasan sin cambios en su funcionamiento.
+- Revisión visual en navegador no disponible: Mac bloqueado.
+- Publicación en raíz y `/v6/`; versiones anteriores intactas.
+
+Nota de historial: la etiqueta local v0.5.0 se creó por error antes del commit, tras fallar el guardado por permisos, y apunta a v0.4.0. Se conserva sin sobrescribir; la siguiente versión funcional es v0.6.0.
