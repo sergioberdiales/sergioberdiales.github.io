@@ -1,0 +1,41 @@
+# Evolución del juego
+
+Cada versión funcional se conserva en un commit de Git y una etiqueta `v0.N.0`.
+Este registro describe los cambios y las comprobaciones de cada versión.
+Las versiones se guardan localmente en este proyecto.
+
+## v0.2.0 — Brazo articulado y audio provisional
+
+- Brazo del vaso con hombro fijo y segmentos de 78 y 83 unidades, resueltos mediante IK de dos huesos. El brazo levantado también conserva sus longitudes.
+- Vaso limitado horizontalmente a 210–276,1 unidades de un lienzo lógico de 400; altura fija de 368. El extremo derecho se calcula a partir del alcance de la mano, dejando margen antes de estirar por completo el codo.
+- Botella más pequeña, sujeta por la mano; gafas oscuras y mangas remangadas.
+- Web Audio: ruido filtrado durante el vertido, timbre distinto al acertar, gotas al suelo y confirmación final. Se desbloquea desde el primer gesto.
+- Se conserva la pantalla y el control con un dedo.
+- Comprobado: arrastre en navegador, pantalla de 390 × 844, AudioContext en estado `running` tras el primer gesto, sin errores de consola. Falta valorar el sonido de oído en un móvil real.
+- `node tests/mechanics.cjs`: longitudes constantes, límites, colisiones dentro/fuera, conservación de las 600 gotas en tres partidas completas y parada al soltar.
+
+### Puntos de sustitución
+
+- Sonidos: objeto `sound` en `game.js`, métodos `unlock`, `pour`, `splash` y `finish`.
+- Arte: `drawFelix`, `drawBottle` y `drawGlass`; conservar los anclajes del hombro, mano, boca de botella y borde del vaso.
+- Colisión: cada gota se evalúa una sola vez al cruzar la altura del borde del vaso. Se interpola su posición horizontal y se compara con la abertura interior de 40 unidades.
+
+## v0.1.0 — Prototipo inicial
+
+- Pantalla vertical con Félix, botella, vaso y chorro.
+- Arrastrar el vaso y mantener pulsado para escanciar.
+- Reparto de sidra dentro/fuera y botón «Otro culín».
+- Imagen de referencia de Félix incluida en el proyecto.
+- Pendiente: corregir el estiramiento del brazo e incorporar audio.
+
+Para consultar las versiones: `git log --oneline --decorate` y `git tag`.
+Para exportar una versión sin alterar el trabajo actual:
+`git archive --format=zip --output=/tmp/escanciador-v0.1.0.zip v0.1.0`.
+
+## Publicación de la segunda versión
+
+- Sitio: https://sergioberdiales.github.io/escanciador/
+- La raíz abre la segunda versión; `/v1/` conserva la primera y `/v2/` la segunda.
+- `bash scripts/build-site.sh` prepara los archivos de publicación y extrae las copias históricas desde sus etiquetas Git.
+- Alojamiento público: GitHub Pages, repositorio `sergioberdiales/sergioberdiales.github.io`, carpeta `escanciador/`.
+- La copia de ChatGPT Sites se creó por error; no es el destino de publicación del proyecto.
