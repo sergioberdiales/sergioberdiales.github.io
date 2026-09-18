@@ -49,3 +49,14 @@ Para exportar una versión sin alterar el trabajo actual:
 - Publicación principal y copia `/v3/`; `/v1/` y `/v2/` permanecen intactas.
 - Comprobado: pruebas de mecánica y de audio, activación real mediante clic en navegador (`running`), sin errores de consola. Pendiente de confirmar audición en el dispositivo del usuario.
 - Referencias: https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/state y https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/User_activation
+
+## v0.4.0 — Codo hacia el cuerpo y ciclos de audio
+
+- Invierte la solución IK del brazo del vaso: el codo queda hacia el cuerpo y la mano hacia fuera, con las mismas longitudes y límites.
+- Cada pulsación crea una fuente nueva para el chorro; al soltar se detiene y desconecta. No se mantiene un bucle silencioso permanente.
+- Los cambios de volumen y timbre se programan solo al cambiar el estado, en lugar de cada fotograma.
+- Al regresar tras pérdida de foco, el siguiente gesto reconstruye el contexto. «Probar sonido» también reconstruye la salida antes de reproducir la confirmación.
+- Un desbloqueo tardío no vuelve a arrancar el chorro si ya se ha soltado el vaso.
+- Pruebas: 30 ciclos de audio, vuelta tras interrupción, recuperación de contexto y longitudes/orientación del codo en todo el recorrido.
+- No se ha podido revisar visualmente en navegador porque el Mac está bloqueado. La audición en el móvil del usuario sigue pendiente de confirmación.
+- Publicación: raíz y `/v4/`; las versiones anteriores permanecen intactas.
