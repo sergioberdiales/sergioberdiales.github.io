@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5f1e6">
+  <title>Un culín con Félix</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><span class="eyebrow">HECHO EN ASTURIAS · PROTOTIPO 01</span><h1>Un culín <em>con Félix.</em></h1><p>El secreto está en el vaso.</p></header>
+    <section class="game" aria-label="Juego de escanciar sidra">
+      <div class="pour-meter"><span>UN CULÍN</span><div class="track"><div id="remaining"></div></div><span id="pour-state">LISTO</span></div>
+      <canvas id="scene" width="800" height="1120" tabindex="0" aria-label="Arrastra el vaso horizontalmente y mantén pulsado para escanciar. Con teclado, usa las flechas y mantén espacio."></canvas>
+      <div class="stats"><div><span>EN EL VASO</span><strong id="caught">0<span>%</span></strong></div><div><span>POR EL SUELO</span><strong id="spilled">0<span>%</span></strong></div></div>
+      <div class="result" id="result" hidden aria-live="polite"><div class="result-card"><span class="eyebrow">CULÍN SERVIDO</span><h2>¡Salud, ho!</h2><p>SIDRA EN EL VASO <strong id="final-caught"></strong></p><p>DESPERDICIADA <strong id="final-spilled"></strong></p><button id="again">OTRO CULÍN <span aria-hidden="true">↻</span></button></div></div>
+    </section>
+    <footer><p id="hint"><span aria-hidden="true">↔</span> Arrastra el vaso. Mantén para escanciar.</p><small>Suelta para parar · Un dedo, un culín.</small></footer>
+  </main>
+</body>
+</html>
