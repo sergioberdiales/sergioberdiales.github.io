@@ -81,3 +81,14 @@ Nota de historial: la etiqueta local v0.5.0 se creó por error antes del commit,
 - Corregido redondeo del marcador final para que ambos porcentajes sumen 100%.
 - Pruebas de mecánica, audio, todas las respuestas, bloqueo de doble respuesta, rotación, comentarios y reinicio. Revisión de pregunta y resultado en navegador mediante ronda simulada y clic real en respuesta y reinicio.
 - Publicación en raíz y `/v7/`, conservando versiones anteriores.
+
+## v0.8.0 — Más puntería y más cultura
+
+- Retirada la oreja circular y su detalle interior.
+- Activación inicial mediante «Empezar con sonido»: clic nativo antes de escanciar, confirmación breve y opción de reintentar o jugar sin audio si el navegador lo bloquea. El arrastre y el teclado no consumen sidra antes de empezar.
+- Vaso de 28 unidades de ancho (antes 48), con abertura visible coherente con la colisión. Balanceo más rápido y fase aleatoria por culín; trayectoria calculada para permanecer alcanzable.
+- Prueba de dificultad en cuatro fases: mejor posición inmóvil 68%; seguimiento preciso simulado 100%. No hay fallos impuestos.
+- Ocho preguntas nuevas: Silo, Valdediós, Tito Bustillo, Os Teixóis, batán, cabo de Peñas, Llastres y Alejandro Casona. Fuentes oficiales enlazadas tras responder.
+- Conservadas las frases de Félix.
+- Verificado: pruebas de mecánica, preguntas, dificultad y audio; primer clic activa AudioContext en navegador, sin oreja y vaso nuevo revisados visualmente. La audición en el móvil del usuario sigue pendiente.
+- Publicación principal y `/v8/`; versiones anteriores intactas.
