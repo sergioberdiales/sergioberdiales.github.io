@@ -71,3 +71,13 @@ Para exportar una versión sin alterar el trabajo actual:
 - Publicación en raíz y `/v6/`; versiones anteriores intactas.
 
 Nota de historial: la etiqueta local v0.5.0 se creó por error antes del commit, tras fallar el guardado por permisos, y apunta a v0.4.0. Se conserva sin sobrescribir; la siguiente versión funcional es v0.6.0.
+
+## v0.7.0 — Un culín de cultura
+
+- Al terminar de escanciar aparece una pregunta de cultura asturiana con cuatro opciones y una única respuesta.
+- Seis preguntas contrastadas sobre capital, Día de Asturias, fabada, Gascona, oricios y escanciado; fuente enlazada al responder. Rotan sin repetirse hasta agotar la tanda.
+- Después se muestran sidra recogida y desperdiciada, acierto o fallo, explicación y una de doce frases de Félix según el porcentaje (menos de 40%, de 40 a 74%, desde 75%) y la respuesta.
+- Reinicio mediante «Otro culín». Tarjeta desplazable en pantallas cortas y botones de al menos 44 px.
+- Corregido redondeo del marcador final para que ambos porcentajes sumen 100%.
+- Pruebas de mecánica, audio, todas las respuestas, bloqueo de doble respuesta, rotación, comentarios y reinicio. Revisión de pregunta y resultado en navegador mediante ronda simulada y clic real en respuesta y reinicio.
+- Publicación en raíz y `/v7/`, conservando versiones anteriores.
