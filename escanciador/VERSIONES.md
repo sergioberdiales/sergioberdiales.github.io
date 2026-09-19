@@ -92,3 +92,11 @@ Nota de historial: la etiqueta local v0.5.0 se creó por error antes del commit,
 - Conservadas las frases de Félix.
 - Verificado: pruebas de mecánica, preguntas, dificultad y audio; primer clic activa AudioContext en navegador, sin oreja y vaso nuevo revisados visualmente. La audición en el móvil del usuario sigue pendiente.
 - Publicación principal y `/v8/`; versiones anteriores intactas.
+
+## v0.9.0 — Vuelve el vaso de sidra
+
+- Recupera el vaso ancho de 48 unidades y su agarre original. La abertura de colisión vuelve a coincidir con el vaso ancho.
+- Conserva la velocidad de balanceo y amplía su recorrido para compensar la abertura mayor; el chorro sigue siendo alcanzable con el vaso.
+- Simulación en cuatro fases: mejor posición inmóvil 72%, seguimiento preciso 100%. Pruebas de mecánica, preguntas y audio superadas.
+- Las ocho preguntas no cambian; se entrega PREGUNTAS.md con opciones, respuestas y fuentes.
+- Publicación en raíz y `/v9/`, conservando versiones anteriores.
