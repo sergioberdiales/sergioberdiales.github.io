@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta name="description" content="Mila tiene cara de inocente y unas cuantas cosas que decir. Un generador de chistes con mucho carácter felino.">
+  <title>Generador de chistes de Mila</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./chistes.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Generador de chistes <span>de Mila<svg aria-hidden="true" viewBox="0 0 48 48"><ellipse cx="24" cy="31" rx="13" ry="10"/><ellipse cx="9" cy="20" rx="5" ry="7" transform="rotate(-25 9 20)"/><ellipse cx="19" cy="10" rx="5" ry="7"/><ellipse cx="31" cy="11" rx="5" ry="7"/><ellipse cx="40" cy="22" rx="5" ry="7" transform="rotate(25 40 22)"/></svg></span></h1>
+    <div class="scene">
+      <img src="./assets/mila.jpg" width="1536" height="1152" alt="Mila, una gata blanca y negra de mirada inocente, tumbada sobre unos papeles delante de un portátil." fetchpriority="high">
+      <div class="bubble"><p id="joke" role="status" aria-live="polite" aria-atomic="true"></p></div>
+    </div>
+    <button id="generate" type="button" disabled>Generar otro chiste</button>
+    <noscript><p>Activa JavaScript para escuchar lo que Mila tiene que decir.</p></noscript>
+  </main>
+</body>
+</html>
