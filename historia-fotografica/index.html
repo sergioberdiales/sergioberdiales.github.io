@@ -14,6 +14,18 @@
 @media(max-width:1050px){.filters{grid-template-columns:1fr 1.5fr 1fr}.pair-row{grid-template-columns:1fr;gap:5px}.pair-value{grid-template-columns:12px minmax(25px,1fr) 115px}}
 @media(max-width:760px){.filters{grid-template-columns:1fr 1fr}.filters .lens-filter{grid-column:1/-1}.ab-controls{grid-template-columns:1fr}.ab-summary{grid-template-columns:1fr 1fr}.ab-overlap{grid-column:1/-1}.ab-group{padding:16px}.compare-actions{gap:10px}.compare-toolbar{align-items:flex-start}.pair-row{grid-template-columns:1fr}.tabs{gap:18px}.tabs button{gap:5px}.tabs button span{font-size:12px}.focal-panel{padding:16px}.focal-scroll .stack-chart{min-width:680px}.active{flex-wrap:wrap}.ab-stat strong{font-size:29px}}
 
+
+/* Shared metadata filters, enabled only when fields exist in the export. */
+.metadata-filters{display:grid;grid-template-columns:minmax(160px,1fr) minmax(250px,2fr);gap:18px;margin:14px 0 0}
+.metadata-filters label{display:block}.metadata-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+.keyword-picker{border:1px solid var(--line);border-radius:5px;background:var(--paper)}
+.keyword-picker summary{padding:11px 12px;cursor:pointer;list-style-position:inside}
+.keyword-picker-body{background:#fff;border-top:1px solid var(--line);padding:12px}
+.keyword-picker-body input[type="search"]{width:100%;padding:9px 10px;margin:5px 0;border:1px solid var(--line);border-radius:4px}
+.keyword-options{max-height:205px;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:4px 12px;padding:5px 0}
+.keyword-options label{display:flex;align-items:center;gap:8px;font-size:12px;overflow-wrap:anywhere;padding:4px 0;color:var(--ink)}
+.metadata-note{margin:12px 0 0}
+@media(max-width:680px){.metadata-filters{grid-template-columns:1fr;gap:12px}}
 </style>
 
 </head>
@@ -28,7 +40,12 @@
  <section class="filter-panel" aria-label="Filtros del archivo">
   <div class="filter-title"><span class="eyebrow" id="filter-heading">TU SELECCIÓN</span><button id="reset" class="text-button">Restablecer ↺</button></div>
   <div class="filters"><label>Cámara<select id="camera"><option value="">Las tres cámaras</option></select></label><label class="lens-filter">Objetivo<select id="lens"><option value="">Todos los objetivos</option></select></label><label>Desde<select id="from"></select></label><label>Hasta<select id="to"></select></label><label>Modo<select id="mode"></select></label></div>
-  <div id="common-locks" hidden><p class="footnote">Marca los filtros superiores que quieres fijar para ambos grupos. Los demás se eligen por separado en A y B.</p><div class="lock-options"><label><input type="checkbox" data-lock="camera"> Fijar cámara</label><label><input type="checkbox" data-lock="lens"> Fijar objetivo</label><label><input type="checkbox" data-lock="mode"> Fijar modo</label><label><input type="checkbox" data-lock="period"> Fijar periodo</label></div></div>
+  <div id="metadata-filters" class="metadata-filters" hidden>
+   <label id="meta-rating-field" hidden>Valoración mínima<select id="min-rating"><option value="0">Todas las valoraciones</option><option value="1">★ o más</option><option value="2">★★ o más</option><option value="3">★★★ o más</option><option value="4">★★★★ o más</option><option value="5">★★★★★</option></select></label>
+   <div id="meta-keywords-field" hidden><span class="metadata-label">Palabras clave de Lightroom</span><details class="keyword-picker"><summary id="keyword-summary">Todas las palabras clave</summary><div class="keyword-picker-body"><label for="keyword-search">Buscar palabra clave</label><input id="keyword-search" type="search" placeholder="Buscar etiqueta…"><div id="keyword-options" class="keyword-options"></div><p class="footnote">Puedes seleccionar varias. Se incluirán las fotografías con al menos una de ellas.</p></div></details></div>
+  </div>
+  <p id="metadata-note" class="footnote metadata-note">La instantánea actual no contiene estrellas ni palabras clave: estarán disponibles tras ampliar la exportación de Lightroom.</p>
+  <p id="compare-filter-hint" class="footnote metadata-note" hidden>Estos filtros se aplican siempre a los dos grupos. Las condiciones de A y B se añaden a esta selección; si se contradicen, ese grupo quedará vacío.</p>
   <div id="active" class="active" aria-live="polite"></div>
  </section>
  <section id="summary" class="summary" aria-label="Resumen de la selección" aria-live="polite"></section>
@@ -69,7 +86,12 @@ window.PHOTO_DATA={"meta":{"title":"15 años detrás de la cámara","snapshot":"
 'use strict';
 const count=rows=>rows.reduce((n,r)=>n+r[8],0);
 const share=(n,d)=>d?100*n/d:null;
-const filter=(rows,s)=>rows.filter(r=>(s.camera===''||r[0]===+s.camera)&&(s.lens===''||r[2]===+s.lens)&&(s.mode===''||r[3]===+s.mode)&&r[1]>=s.from&&r[1]<=s.to);
+const filter=(rows,s,schema=[])=>{
+ const ratingIdx=schema.indexOf('rating'), keywordsIdx=schema.indexOf('keywords');
+ const wanted=Array.isArray(s.keywords)?s.keywords:[];
+ const kws=v=>Array.isArray(v)?v:String(v||'').split('|').map(k=>k.trim()).filter(Boolean);
+ return rows.filter(r=>(s.camera===''||r[0]===+s.camera)&&(s.lens===''||r[2]===+s.lens)&&(s.mode===''||r[3]===+s.mode)&&r[1]>=s.from&&r[1]<=s.to&&(!s.rating||(ratingIdx>=0&&Number(r[ratingIdx])>=s.rating))&&(!wanted.length||(keywordsIdx>=0&&wanted.some(k=>kws(r[keywordsIdx]).includes(k)))));
+};
 function distribution(rows,index){const m=new Map();for(const r of rows){const k=r[index];m.set(k,(m.get(k)||0)+r[8]);}return [...m].sort((a,b)=>a[0]===null?1:b[0]===null?-1:a[0]-b[0]);}
 function median(rows,index){const d=distribution(rows,index).filter(([v])=>v!==null), n=d.reduce((s,r)=>s+r[1],0);if(!n)return null;let sum=0, lo,hi;for(const [v,c] of d){sum+=c;if(lo===undefined&&sum>Math.floor((n-1)/2))lo=v;if(sum>Math.floor(n/2)){hi=v;break;}}return (lo+hi)/2;}
 function focalBins(rows,lens){
@@ -87,9 +109,9 @@ const shutterBand=v=>v<=1/1000?0:v<=1/500?1:v<=1/125?2:v<=1/30?3:4;
 function joint(rows){const cells=Array.from({length:6},()=>Array(5).fill(0));let n=0;for(const r of rows){if(r[4]!==null&&r[5]!==null){cells[apertureBand(r[4])][shutterBand(r[5])]+=r[8];n+=r[8];}}return {cells,n,missing:count(rows)-n};}
 function slow(rows){const valid=rows.filter(r=>r[5]!==null&&r[7]!==null);return {n:count(valid),hits:count(valid.filter(r=>r[5]>1/(r[7]*(r[0]===0?1.6:1))))};}
 function wide(rows,lens){if(!lens||!lens.constantAperture)return null;const valid=rows.filter(r=>r[4]!==null);return {n:count(valid),hits:count(valid.filter(r=>Math.abs(r[4]-lens.constantAperture)<0.06)),aperture:lens.constantAperture};}
-// A pinned dimension inherits the common selection; all other dimensions remain independent.
-function resolveGroup(common,local,locks){const s={...local};for(const k of ['camera','lens','mode'])if(locks[k])s[k]=common[k];if(locks.period){s.from=common.from;s.to=common.to;}return s;}
-function compareGroups(rows,common,a,b,locks){const states=[a,b].map(s=>resolveGroup(common,s,locks)),groups=states.map(s=>filter(rows,s)),second=new Set(groups[1]);return {states,groups,totals:groups.map(count),overlap:count(groups[0].filter(r=>second.has(r)))};}
+// Shared filters always apply first; each group adds its own restrictions.
+function resolveGroup(common,local){return {...local};}
+function compareGroups(rows,common,a,b,schema=[]){const base=filter(rows,common,schema),states=[a,b].map(s=>resolveGroup(common,s)),groups=states.map(s=>filter(base,s,schema)),second=new Set(groups[1]);return {states,groups,totals:groups.map(count),overlap:count(groups[0].filter(r=>second.has(r)))};}
 function technicalBins(rows,index){
  if(index===7)return focalBins(rows,null);
  const labels=index===4?['≤ ƒ/2','> ƒ/2–2,8','> ƒ/2,8–4','> ƒ/4–5,6','> ƒ/5,6–8','> ƒ/8']:index===5?['≤ 1/1000 s','> 1/1000–1/500 s','> 1/500–1/125 s','> 1/125–1/30 s','> 1/30 s']:['≤ 100','> 100–400','> 400–800','> 800–1600','> 1600–3200','> 3200'];
@@ -114,10 +136,10 @@ const time=v=>v===null?'Sin dato':v>=1?`${num(v)} s`:`1/${num(1/v)} s`;
 const val=(v,i)=>v===null?'Sin dato':i===4?`ƒ/${num(v)}`:i===5?time(v):i===6?`ISO ${fmt(v)}`:i===7?`${num(v)} mm`:String(v);
 const modeColors=['#347cac','#4e8a66','#ce8e35','#46544f','#b2b9ad','#d8dcd4'];
 const modeNames=['P · programado','Av · apertura','Tv · velocidad','M · manual','Otros programas','Sin determinar'];
-let state={camera:'',lens:'',mode:'',from:2011,to:2026}, tab='detail', current=[], trendMetric=6;
+let state={camera:'',lens:'',mode:'',from:2011,to:2026,rating:0,keywords:[]}, tab='detail', current=[], trendMetric=6;
 const empty=()=>'<div class="empty"><h3>No hay archivos para esta combinación</h3><p>Amplía el periodo o restablece los filtros para seguir explorando.</p><button class="outline-button" data-reset>Restablecer filtros</button></div>';
 const table=(headers,rows,cls='')=>`<table class="${cls}"><thead><tr>${headers.map(s=>`<th scope="col">${esc(s)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>i===0?`<th scope="row" style="position:static;background:transparent;color:inherit;font-size:12px">${v}</th>`:`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-const scope=()=>[state.camera===''?'Las tres cámaras':`EOS ${D.cameras[+state.camera]}`,state.lens===''?'Todos los objetivos':D.lenses[+state.lens].name,`${state.from}–${state.to}`,state.mode!==''?modeNames[+state.mode]:null].filter(Boolean).join(' · ');
+const scope=()=>[state.camera===''?'Las tres cámaras':`EOS ${D.cameras[+state.camera]}`,state.lens===''?'Todos los objetivos':D.lenses[+state.lens].name,`${state.from}–${state.to}`,state.mode!==''?modeNames[+state.mode]:null,state.rating?`${state.rating}+ estrellas`:null,state.keywords.length?`Etiquetas: ${state.keywords.join(', ')}`:null].filter(Boolean).join(' · ');
 function options(el,values){el.innerHTML=values.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join('');}
 options($('camera'),[['','Las tres cámaras'],...D.cameras.map((c,i)=>[i,`Canon EOS ${c}`])]);
 options($('lens'),[['','Todos los objetivos'],...D.lenses.map(l=>[l.id,l.name])]);
@@ -125,12 +147,29 @@ const years=Array.from({length:16},(_,i)=>2011+i);
 options($('mode'),[['','Todos los modos'],...modeNames.map((m,i)=>[i,m])]);
 for(const id of ['from','to'])options($(id),years.map(y=>[y,`${y}${y===2026?' · parcial':''}`]));
 
-function sync(){for(const k of ['camera','lens','mode','from','to'])$(k).value=state[k];}
+const schema=Array.isArray(D.meta.schema)?D.meta.schema:[];
+const ratingIndex=schema.indexOf('rating'), keywordsIndex=schema.indexOf('keywords');
+const hasRating=ratingIndex>=0, hasKeywords=keywordsIndex>=0;
+const toKeywords=v=>Array.isArray(v)?v:String(v||'').split('|').map(k=>k.trim()).filter(Boolean);
+const keywordVocabulary=hasKeywords?[...new Set(D.rows.flatMap(r=>toKeywords(r[keywordsIndex])))].sort((a,b)=>a.localeCompare(b,'es')):[];
+$('metadata-filters').hidden=!(hasRating||hasKeywords);
+$('meta-rating-field').hidden=!hasRating;$('meta-keywords-field').hidden=!hasKeywords;
+$('metadata-note').hidden=hasRating&&hasKeywords;
+$('metadata-note').textContent=(!hasRating&&!hasKeywords)?'Esta instantánea no contiene estrellas ni palabras clave; necesitan incluirse en la exportación de Lightroom.':(!hasRating?'Las estrellas aún no están incluidas en esta exportación.':'Las palabras clave aún no están incluidas en esta exportación.');
+function renderKeywordOptions(){
+ if(!hasKeywords)return;
+ const query=$('keyword-search').value.trim().toLocaleLowerCase('es'),matches=keywordVocabulary.filter(k=>k.toLocaleLowerCase('es').includes(query)),shown=[...new Set([...state.keywords,...matches.slice(0,100)])];
+ $('keyword-options').innerHTML=shown.length?shown.map(k=>`<label><input type="checkbox" data-keyword="${esc(k)}" ${state.keywords.includes(k)?'checked':''}> ${esc(k)}</label>`).join(''):'<p class="footnote">Ninguna palabra clave coincide con la búsqueda.</p>';
+ $('keyword-summary').textContent=state.keywords.length?`${state.keywords.length} palabra(s) seleccionada(s): ${state.keywords.slice(0,2).join(', ')}${state.keywords.length>2?'…':''}`:'Todas las palabras clave';
+}
+renderKeywordOptions();
+
+function sync(){for(const k of ['camera','lens','mode','from','to'])$(k).value=state[k];if(hasRating)$('min-rating').value=state.rating;renderKeywordOptions();}
 function select(next){state={...state,...next};sync();render();}
-function reset(){state={camera:'',lens:'',mode:'',from:2011,to:2026};sync();render();}
-function setTab(next){if(next==='compare'&&!ab.initialized){ab.a={...state};ab.b={...state};ab.initialized=true;}tab=next;for(const el of document.querySelectorAll('[data-tab]')){if(el.dataset.tab===tab)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');}for(const id of ['evolution','detail','compare'])$(id).hidden=id!==tab;$('common-locks').hidden=tab!=='compare';$('summary').hidden=tab==='compare';$('filter-heading').textContent=tab==='compare'?'FILTROS COMUNES · OPCIONALES':'TU SELECCIÓN';if(tab==='compare')renderAB();}
+function reset(){state={camera:'',lens:'',mode:'',from:2011,to:2026,rating:0,keywords:[]};sync();render();}
+function setTab(next){tab=next;for(const el of document.querySelectorAll('[data-tab]')){if(el.dataset.tab===tab)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');}for(const id of ['evolution','detail','compare'])$(id).hidden=id!==tab;$('compare-filter-hint').hidden=tab!=='compare';$('summary').hidden=tab==='compare';$('filter-heading').textContent=tab==='compare'?'FILTROS GENERALES · A Y B':'TU SELECCIÓN';if(tab==='compare')renderAB();}
 function render(){
- current=M.filter(D.rows,state);const n=M.count(current), cams=new Set(current.map(r=>r[0])), lenses=new Set(current.map(r=>r[2]));
+ current=M.filter(D.rows,state,D.meta.schema);const n=M.count(current), cams=new Set(current.map(r=>r[0])), lenses=new Set(current.map(r=>r[2]));
  $('active').innerHTML=`<span>${esc(scope())}</span>${state.mode!==''?'<button class="chip" data-clear-mode>Quitar filtro de modo ×</button>':''}`;
  $('summary').innerHTML=`<div class="metric"><div class="metric-value">${fmt(n)}</div><div class="metric-label">archivos en la selección</div></div><div class="metric"><div class="metric-value">${cams.size} / 3</div><div class="metric-label">cámaras</div></div><div class="metric"><div class="metric-value">${lenses.size}</div><div class="metric-label">objetivos registrados</div></div><div class="metric-note">${pct(n,D.meta.total)} del archivo del periodo.<br>RAW+JPEG y derivados pueden contar por separado.</div>`;
  renderEvolution();renderDetail();if(tab==='compare')renderAB();hideTip();
@@ -210,7 +249,8 @@ function renderTrend(){
  $('trend-table').innerHTML=table(['Año','Mediana','Con dato / total'],data.map(r=>[r.y,esc(r.v===null?'—':val(r.v,trendMetric)),`${fmt(r.valid)} / ${fmt(r.n)}`]));
 }
 function download(){const rows=[['Selección',scope()],['Archivos',M.count(current)],[],['Parámetro','Valor','Archivos','Porcentaje con dato']];for(const i of [3,4,5,6,7]){const valid=M.count(current.filter(r=>r[i]!==null));for(const [v,n] of M.distribution(current,i))rows.push([['','','','Modo','Apertura','Velocidad','ISO','Focal'][i],i===3?modeNames[v]:val(v,i),n,v===null?'':pct(n,valid)]);}const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='mi-fotografia-resumen.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
-const ab={a:{...state},b:{...state},locks:{camera:false,lens:false,mode:false,period:false},scale:'percent',initialized:false};
+const blankGroup=()=>({camera:'',lens:'',mode:'',from:2011,to:2026});
+const ab={a:blankGroup(),b:blankGroup(),scale:'percent'};
 const focalColors=['#376884','#5b899d','#87aaad','#b4c3aa','#c8ad72','#aa803f','#765a36'];
 function renderFocalEvolution(){
  const data=M.focalYears(current), valid=data.reduce((s,r)=>s+r.n,0), labels=M.focalBins([],null).bins.map(b=>b.label);
@@ -220,7 +260,7 @@ function renderFocalEvolution(){
 function groupScope(s){return [s.camera===''?'Las tres cámaras':`EOS ${D.cameras[+s.camera]}`,s.lens===''?'Todos los objetivos':D.lenses[+s.lens].name,s.mode===''?'Todos los modos':modeNames[+s.mode],`${s.from}–${s.to}`].join(' · ');}
 function groupControls(key,s){
  const fields=[['camera','Cámara',[['','Las tres cámaras'],...D.cameras.map((c,i)=>[i,`Canon EOS ${c}`])]],['lens','Objetivo',[['','Todos los objetivos'],...D.lenses.map(l=>[l.id,l.name])]],['mode','Modo',[['','Todos los modos'],...modeNames.map((m,i)=>[i,m])]],['from','Desde',years.map(y=>[y,`${y}${y===2026?' · parcial':''}`])],['to','Hasta',years.map(y=>[y,`${y}${y===2026?' · parcial':''}`])]];
- return `<fieldset class="ab-group group-${key}"><legend>Grupo ${key.toUpperCase()}</legend><div class="ab-fields">${fields.map(([k,label,opts])=>{const locked=ab.locks[['from','to'].includes(k)?'period':k];return `<label class="field-${k}" for="${key}-${k}">${label}${locked?' · común':''}<select id="${key}-${k}" data-group="${key}" data-field="${k}" ${locked?'disabled':''}>${opts.map(([v,l])=>`<option value="${v}" ${String(v)===String(s[k])?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`;}).join('')}</div><p class="coverage">${esc(groupScope(s))}</p></fieldset>`;
+ return `<fieldset class="ab-group group-${key}"><legend>Grupo ${key.toUpperCase()}</legend><p class="coverage">Condiciones adicionales a los filtros generales</p><div class="ab-fields">${fields.map(([k,label,opts])=>`<label class="field-${k}" for="${key}-${k}">${label}<select id="${key}-${k}" data-group="${key}" data-field="${k}">${opts.map(([v,l])=>`<option value="${v}" ${String(v)===String(s[k])?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`).join('')}</div><p class="coverage">${esc(groupScope(s))}</p></fieldset>`;
 }
 function pairedBars(entries,denominators){
  const percent=ab.scale==='percent', max=percent?100:Math.max(1,...entries.flatMap(e=>e.counts));
@@ -228,9 +268,8 @@ function pairedBars(entries,denominators){
 }
 function pairedTable(entries,denominators){return table(['Valor','A · archivos','A · %','B · archivos','B · %','B − A · pp'],entries.map(e=>{const [a,b]=e.counts,[na,nb]=denominators;return [esc(e.label),fmt(a),pct(a,na),fmt(b),pct(b,nb),na&&nb?num(100*b/nb-100*a/na):'—'];}));}
 function renderAB(){
- const c=M.compareGroups(D.rows,state,ab.a,ab.b,ab.locks), {groups,totals,states,overlap}=c;
+ const c=M.compareGroups(D.rows,state,ab.a,ab.b,D.meta.schema), {groups,totals,states,overlap}=c;
  $('ab-controls').innerHTML=groupControls('a',states[0])+groupControls('b',states[1]);
- for(const el of document.querySelectorAll('[data-lock]'))el.checked=ab.locks[el.dataset.lock];
  $('ab-summary').innerHTML=totals.map((n,i)=>`<div class="ab-stat group-${i?'b':'a'}"><span>GRUPO ${i?'B':'A'}</span><strong>${fmt(n)}</strong><span>archivos · ${pct(n,D.meta.total)} del archivo</span>${n?'':'<p>Sin archivos. Revisa los filtros de este grupo y los filtros comunes.</p>'}</div>`).join('')+`<div class="ab-overlap"><strong>${fmt(overlap)} archivos compartidos</strong><br>${pct(overlap,totals[0])} de A · ${pct(overlap,totals[1])} de B<br>${states[0].from===states[1].from&&states[0].to===states[1].to?'Mismo intervalo temporal.':'Intervalos temporales diferentes.'}</div>`;
  let html=`<article class="panel full"><h3>Resumen de los dos grupos</h3><p>Medianas ponderadas por archivos · n indica los archivos con dato en cada parámetro. En móvil, desliza la tabla para ver ambos grupos.</p><div class="table-scroll">${table(['Métrica','Grupo A','Grupo B'],[['Archivos',...totals.map(fmt)],...[[4,'Apertura mediana'],[5,'Velocidad mediana'],[6,'ISO mediano'],[7,'Focal mediana']].map(([i,label])=>[label,...groups.map(g=>{const v=M.median(g,i);return `${v===null?'—':esc(val(v,i))} <small>· n = ${fmt(M.count(g.filter(r=>r[i]!==null)))}</small>`;})])])}</div></article>`;
  for(const [i,title] of [[4,'Aperturas'],[5,'Velocidades de obturación'],[6,'Sensibilidades ISO'],[7,'Distancias focales']]){
@@ -245,15 +284,17 @@ function renderAB(){
  $('ab-results').innerHTML=html;$('download-compare').disabled=!totals.some(Boolean);
 }
 function saveCSV(rows,name){const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
-function downloadAB(){const {groups,states,totals,overlap}=M.compareGroups(D.rows,state,ab.a,ab.b,ab.locks),rows=[['Grupo A',groupScope(states[0])],['Grupo B',groupScope(states[1])],['Archivos A',totals[0]],['Archivos B',totals[1]],['Archivos compartidos',overlap],[],['Parámetro','Valor','A archivos','A % con dato','B archivos','B % con dato']];for(const [i,label] of [[1,'Año (% del grupo)'],[3,'Modo'],[4,'Apertura'],[5,'Velocidad'],[6,'ISO'],[7,'Focal física']]){const maps=groups.map(g=>new Map(M.distribution(g,i))),valid=groups.map(g=>M.count(g.filter(r=>r[i]!==null))),values=[...new Set(maps.flatMap(m=>[...m.keys()]))].sort((a,b)=>a===null?1:b===null?-1:a-b);for(const v of values)rows.push([label,i===3?modeNames[v]:val(v,i),...maps.flatMap((m,j)=>[m.get(v)||0,v===null?'':pct(m.get(v)||0,valid[j])])]);}saveCSV(rows,'mi-fotografia-comparacion-ab.csv');}
+function downloadAB(){const {groups,states,totals,overlap}=M.compareGroups(D.rows,state,ab.a,ab.b,D.meta.schema),rows=[['Filtros generales',scope()],['Grupo A',groupScope(states[0])],['Grupo B',groupScope(states[1])],['Archivos A',totals[0]],['Archivos B',totals[1]],['Archivos compartidos',overlap],[],['Parámetro','Valor','A archivos','A % con dato','B archivos','B % con dato']];for(const [i,label] of [[1,'Año (% del grupo)'],[3,'Modo'],[4,'Apertura'],[5,'Velocidad'],[6,'ISO'],[7,'Focal física']]){const maps=groups.map(g=>new Map(M.distribution(g,i))),valid=groups.map(g=>M.count(g.filter(r=>r[i]!==null))),values=[...new Set(maps.flatMap(m=>[...m.keys()]))].sort((a,b)=>a===null?1:b===null?-1:a-b);for(const v of values)rows.push([label,i===3?modeNames[v]:val(v,i),...maps.flatMap((m,j)=>[m.get(v)||0,v===null?'':pct(m.get(v)||0,valid[j])])]);}saveCSV(rows,'mi-fotografia-comparacion-ab.csv');}
 $('ab-controls').addEventListener('change',e=>{const {group,field}=e.target.dataset;if(!group)return;const s=ab[group];s[field]=['from','to'].includes(field)?+e.target.value:e.target.value;if(field==='from'&&s.from>s.to)s.to=s.from;if(field==='to'&&s.to<s.from)s.from=s.to;renderAB();$(group+'-'+field).focus();});
-$('common-locks').addEventListener('change',e=>{const k=e.target.dataset.lock;if(!k)return;ab.locks[k]=e.target.checked;renderAB();});
 $('ab-scale').addEventListener('change',e=>{ab.scale=e.target.value;renderAB();});
 $('copy-a').addEventListener('click',()=>{ab.b={...ab.a};renderAB();});
 $('swap-ab').addEventListener('click',()=>{[ab.a,ab.b]=[ab.b,ab.a];renderAB();});
-$('reset-ab').addEventListener('click',()=>{ab.a={camera:'',lens:'',mode:'',from:2011,to:2026};ab.b={...ab.a};for(const k in ab.locks)ab.locks[k]=false;renderAB();});
+$('reset-ab').addEventListener('click',()=>{ab.a=blankGroup();ab.b=blankGroup();renderAB();});
 $('download-compare').addEventListener('click',downloadAB);
 
+$('min-rating').addEventListener('change',e=>{state.rating=+e.target.value;render();});
+$('keyword-search').addEventListener('input',renderKeywordOptions);
+$('keyword-options').addEventListener('change',e=>{const kw=e.target.dataset.keyword;if(!kw)return;state.keywords=e.target.checked?[...new Set([...state.keywords,kw])]:state.keywords.filter(k=>k!==kw);renderKeywordOptions();render();});
 $('reset').addEventListener('click',reset);$('download').addEventListener('click',download);
 for(const k of ['camera','lens','mode','from','to'])$(k).addEventListener('change',e=>{let value=e.target.value,next={[k]:['from','to'].includes(k)?+value:value};if(k==='from'&&+value>state.to)next.to=+value;if(k==='to'&&+value<state.from)next.from=+value;select(next);if(tab!=='compare'&&(k==='camera'||k==='lens'))setTab('detail');});
 $('expand').addEventListener('change',renderEvolution);
