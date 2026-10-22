@@ -30,6 +30,19 @@
 /* Keep multi-select labels usable on narrow touch screens. */
 .keyword-options label{flex-direction:row;min-height:44px}.keyword-options input[type="checkbox"]{flex:0 0 auto;width:18px;height:18px}.metadata-filters>*,.keyword-picker{min-width:0}.keyword-picker summary{overflow-wrap:anywhere}
 
+/* Compact masthead and navigation visible before filters, on every screen. */
+.hero,main{padding-left:40px;padding-right:40px}.topline{padding:14px 0}.hero-content{padding:20px 0;gap:24px}.hero-content .eyebrow{margin-bottom:8px}h1{font-size:clamp(30px,3vw,42px);letter-spacing:-1.3px;margin-bottom:10px;line-height:1.12}.subtitle{font-size:18px}.hero-side{width:auto;min-width:185px;padding-left:24px}.hero-side p{margin:5px 0;font-size:12px;line-height:1.5}.hero-side a{display:none}.yearmark{font-size:18px}.archive-line{padding:9px 0}main{padding-top:14px}
+.tabs{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;background:var(--paper);padding:10px 0;margin:0 0 18px;border:0}
+.tabs button{display:flex;align-items:center;gap:13px;margin:0;padding:15px 18px;border:1px solid #aebbad;border-radius:7px;background:#fff;color:var(--ink);text-align:left;box-shadow:0 2px 3px #24342f08}
+.tabs button b{font:16px var(--mono);opacity:.65}.tabs button span{font:650 17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.tabs button small{display:block;font-size:12px;font-weight:400;margin-top:5px;color:var(--muted)}.tabs button[aria-current]{background:#365c45;color:white;border-color:#365c45;box-shadow:inset 0 -3px 0 #a9c18e}.tabs button[aria-current] small{color:#e2eadf}
+.view{scroll-margin-top:110px}.filter-panel{padding:16px 20px}.filters{grid-template-columns:1fr 1.7fr .7fr .7fr 1.2fr}.metadata-filters{margin-top:12px}.metadata-note{font-size:11px;line-height:1.5}.summary{margin-top:18px;margin-bottom:22px}
+.inherited-summary{border-left:4px solid var(--accent);background:var(--soft);padding:14px 18px;margin-bottom:20px;font-size:13px}.inherited-summary strong{display:block;margin-bottom:4px}.ab-group .inherited{padding:10px;background:var(--soft);font-size:12px;line-height:1.6;margin:8px 0 16px}.ab-conflict{padding:10px;border:1px solid #c09051;background:#fcf4e7;color:#734614;font-size:12px}.ab-fields label small{font-size:11px}.equipment-chart .hrow{grid-template-columns:minmax(170px,1.4fr) minmax(30px,1fr) 120px}.equipment-chart .hlabel,.pair-label{overflow-wrap:anywhere}.equipment-chart .pair-row{grid-template-columns:minmax(165px,1fr) minmax(180px,1.5fr)}
+.evolution-extra{margin-top:24px}.annual-scroll{overflow-x:auto}.annual-chart{display:flex;align-items:end;gap:10px;min-width:600px;padding:10px 4px 5px}.annual-column{flex:1;min-width:28px;text-align:center;font-size:11px}.annual-stack{height:170px;display:flex;flex-direction:column-reverse;background:#edf0ea;margin:7px 0}.annual-segment{display:block;width:100%;min-height:0;border-top:1px solid #ffffff70}.annual-segment:focus-visible{outline:3px solid #202e27;outline-offset:1px}.annual-column small{font-size:10px;color:var(--muted)}.annual-key{display:flex;gap:8px 15px;flex-wrap:wrap;margin:14px 0;font-size:11px}.annual-key span{display:flex;align-items:center;gap:6px}.annual-key i{width:16px;height:9px;display:inline-block}.lens-modes th:first-child{min-width:190px}.lens-modes td{min-width:80px}.lens-modes small{display:block}.panel .chart-explanation{font-size:12px;line-height:1.6}
+@media(max-width:900px){.hero,main{padding-left:22px;padding-right:22px}.hero-side{display:none}.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.tabs button{padding:14px 12px;gap:8px}.tabs button span{font-size:15px}.tabs button small{font-size:11px}.equipment-chart .hrow{grid-template-columns:1fr 1fr 110px}.equipment-chart .pair-row{grid-template-columns:1fr}}
+@media(max-width:600px){.hero,main{padding-left:16px;padding-right:16px}.hero-content{padding:17px 0}.hero .eyebrow,.edition{display:none}h1{font-size:29px}.description{font-size:12px}.archive-line{flex-direction:column;gap:3px}.tabs{gap:5px;margin-bottom:12px}.tabs button{padding:13px 7px;display:block;text-align:center;min-height:64px}.tabs button b,.tabs button small{display:none}.tabs button span{font-size:13px;line-height:1.3}.filter-panel{padding:15px}.filters{grid-template-columns:1fr 1fr}.metadata-filters{grid-template-columns:1fr}.equipment-chart .hrow{grid-template-columns:minmax(0,1fr) minmax(25px,.6fr) 98px;gap:8px}.equipment-chart .hlabel{font-size:11px}.section-heading{gap:12px}.view{scroll-margin-top:90px}.brand{letter-spacing:1px}}
+
+.annual-panel[data-chart="annual-9"]{grid-column:1/-1}
+
 </style>
 
 </head>
@@ -37,10 +50,15 @@
 <a class="skip" href="#workspace">Ir al análisis</a>
 <header class="hero">
  <div class="topline"><span class="brand"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor"/><path d="M8 3l9 5-1 10-10-1-3-8 5-6m9 5H8l-2 9m10 1-4-8M3 9l9 1" fill="none" stroke="currentColor"/></svg> ARCHIVO FOTOGRÁFICO / SERGIO</span><span class="edition">EXPLORADOR 01</span></div>
- <div class="hero-content"><div><p class="eyebrow">UN RECORRIDO POR MI FORMA DE MIRAR</p><h1>15 años detrás<br>de la cámara<span>.</span></h1><p class="subtitle">De la EOS 600D a la EOS RP</p><p class="description">Modos de exposición y objetivos utilizados · 2011–2026</p></div><div class="hero-side"><span class="yearmark">2011<span>—</span>2026</span><p>Tres cámaras.<br>Muchas maneras de fotografiar.</p><a href="#workspace">Explorar el archivo <span aria-hidden="true">↓</span></a></div></div>
+ <div class="hero-content"><div><p class="eyebrow">UN RECORRIDO POR MI FORMA DE MIRAR</p><h1>15 años detrás de la cámara<span>.</span></h1><p class="subtitle">De la EOS 600D a la EOS RP</p><p class="description">Modos de exposición y objetivos utilizados · 2011–2026</p></div><div class="hero-side"><span class="yearmark">2011<span>—</span>2026</span><p>Tres cámaras.<br>Muchas maneras de fotografiar.</p><a href="#workspace">Explorar el archivo <span aria-hidden="true">↓</span></a></div></div>
  <div class="archive-line"><span><i></i> Instantánea de Lightroom · 14 oct 2026</span><span>Datos hasta el 10 oct 2026 · Sin fotografías</span></div>
 </header>
 <main id="workspace">
+ <nav class="tabs" aria-label="Secciones del archivo">
+ <button data-tab="detail" aria-current="page" aria-controls="detail"><b>01</b><span>Ficha técnica<small>Equipo y ajustes</small></span></button>
+ <button data-tab="compare" aria-controls="compare"><b>02</b><span>Comparación A/B<small>Dos selecciones, lado a lado</small></span></button>
+ <button data-tab="evolution" aria-controls="evolution"><b>03</b><span>Evolución<small>Cambios a lo largo de los años</small></span></button>
+ </nav>
  <section class="filter-panel" aria-label="Filtros del archivo">
   <div class="filter-title"><span class="eyebrow" id="filter-heading">TU SELECCIÓN</span><button id="reset" class="text-button">Restablecer ↺</button></div>
   <div class="filters"><label>Cámara<select id="camera"><option value="">Las tres cámaras</option></select></label><label class="lens-filter">Objetivo<select id="lens"><option value="">Todos los objetivos</option></select></label><label>Desde<select id="from"></select></label><label>Hasta<select id="to"></select></label><label>Modo<select id="mode"></select></label></div>
@@ -48,12 +66,11 @@
    <label id="meta-rating-field" hidden>Valoración mínima<select id="min-rating"><option value="0">Todas las valoraciones</option><option value="1">★ o más</option><option value="2">★★ o más</option><option value="3">★★★ o más</option><option value="4">★★★★ o más</option><option value="5">★★★★★</option></select></label>
    <div id="meta-keywords-field" hidden><span class="metadata-label">Etiquetas públicas de Lightroom</span><details class="keyword-picker"><summary id="keyword-summary">Todas las palabras clave</summary><div class="keyword-picker-body"><label for="keyword-search">Buscar palabra clave</label><input id="keyword-search" type="search" placeholder="Buscar etiqueta…"><div id="keyword-options" class="keyword-options"></div><p class="footnote">Puedes seleccionar varias. Se incluirán las fotografías con al menos una de ellas.</p></div></details></div>
   </div>
-  <p id="metadata-note" class="footnote metadata-note">La instantánea actual no contiene estrellas ni palabras clave: estarán disponibles tras ampliar la exportación de Lightroom.</p>
+  <p id="metadata-note" class="footnote metadata-note">Consultando la cobertura de estrellas y etiquetas…</p>
   <p id="compare-filter-hint" class="footnote metadata-note" hidden>Estos filtros se aplican siempre a los dos grupos. Las condiciones de A y B se añaden a esta selección; si se contradicen, ese grupo quedará vacío.</p>
   <div id="active" class="active" aria-live="polite"></div>
  </section>
  <section id="summary" class="summary" aria-label="Resumen de la selección" aria-live="polite"></section>
- <nav class="tabs" aria-label="Vistas del análisis"><button data-tab="detail" aria-current="page">01 <span>Ficha Técnica</span></button><button data-tab="evolution">02 <span>Evolución</span></button><button data-tab="compare">03 <span>Comparación A/B</span></button></nav>
  <section id="evolution" class="view" hidden>
   <div class="section-heading"><div><p class="eyebrow">EL EQUIPO Y LAS DECISIONES</p><h2>Cómo ha cambiado mi fotografía</h2><p>Porcentaje de archivos de cada año y cámara. Las cifras sobre las barras muestran el volumen.</p></div><label class="toggle"><input type="checkbox" id="expand"> Desplegar «Otros»</label></div>
   <p class="interaction-note">Selecciona una cámara en su título, un objetivo en la leyenda o un segmento para explorar ese año y equipo.</p>
@@ -63,6 +80,7 @@
   <p class="footnote" id="omission"></p>
   <details class="table-disclosure"><summary>Consultar los recuentos de los gráficos</summary><div id="timeline-table" class="table-scroll"></div></details>
   <div id="focal-evolution"></div>
+  <div id="extra-evolution" class="detail-grid evolution-extra"></div>
  </section>
  <section id="detail" class="view">
   <div class="section-heading"><div><p class="eyebrow">UNA MIRADA MÁS CERCA</p><h2 id="detail-title">Ficha de la selección</h2><p id="detail-subtitle"></p></div><button id="download" class="outline-button">Descargar resumen CSV ↓</button></div>
@@ -71,6 +89,7 @@
  <section id="compare" class="view" hidden>
   <div class="section-heading"><div><p class="eyebrow">DOS FORMAS DE MIRAR EL ARCHIVO</p><h2>Comparación A/B</h2><p>Elige dos equipos o periodos y compara sus distribuciones con la misma escala.</p></div><button id="download-compare" class="outline-button">Descargar comparación CSV ↓</button></div>
   <div class="compare-actions"><button id="copy-a" class="outline-button">Copiar A → B</button><button id="swap-ab" class="outline-button">Intercambiar A ↔ B</button><button id="reset-ab" class="text-button">Restablecer comparación ↺</button></div>
+  <div id="ab-inherited" class="inherited-summary" aria-live="polite"></div>
   <div id="ab-controls" class="ab-controls"></div>
   <div id="ab-summary" class="ab-summary" aria-live="polite"></div>
   <div class="compare-toolbar"><div class="legend"><span><i class="swatch" style="background:#52765b"></i> Grupo A</span><span><i class="swatch" style="background:#ad722b"></i> Grupo B</span></div><label>Mostrar barras por<select id="ab-scale"><option value="percent">Porcentajes</option><option value="count">Recuentos</option></select></label></div>
@@ -122,6 +141,28 @@ function wide(rows,lens){if(!lens||!lens.constantAperture)return null;const vali
 // Shared filters always apply first; each group adds its own restrictions.
 function resolveGroup(common,local){return {...local};}
 function compareGroups(rows,common,a,b,schema=[]){const base=filter(rows,common,schema),states=[a,b].map(s=>resolveGroup(common,s)),groups=states.map(s=>filter(base,s,schema)),second=new Set(groups[1]);return {states,groups,totals:groups.map(count),overlap:count(groups[0].filter(r=>second.has(r)))};}
+function effectiveGroup(common,local){
+ const result={...local,from:Math.max(common.from,local.from),to:Math.min(common.to,local.to),rating:common.rating||0,keywords:common.keywords||[]},conflicts=[];
+ for(const k of ['camera','lens','mode']){
+  if(common[k]!==''&&local[k]!==''&&String(common[k])!==String(local[k]))conflicts.push(k);
+  result[k]=local[k]===''?common[k]:local[k];
+ }
+ if(result.from>result.to)conflicts.push('period');
+ return {selection:result,conflicts};
+}
+function annualComposition(rows,index){
+ return distribution(rows,1).map(([year,total])=>{
+  const subset=rows.filter(r=>r[1]===year);
+  if([4,5,6,7].includes(index))return {year,total,...technicalBins(subset,index)};
+  const keys=index===0?[0,1,2]:[null,0,1,2,3,4,5];
+  const bins=keys.map(value=>({value,n:count(subset.filter(r=>r[index]===value))}));
+  const n=bins.reduce((s,b)=>s+b.n,0);return {year,total,n,missing:total-n,bins};
+ });
+}
+function categoryComparison(groups,index){
+ const maps=groups.map(g=>new Map(distribution(g,index))),keys=[...new Set(maps.flatMap(m=>[...m.keys()]))];
+ return keys.map(value=>({value,counts:maps.map(m=>m.get(value)||0)})).sort((a,b)=>b.counts.reduce((s,n)=>s+n,0)-a.counts.reduce((s,n)=>s+n,0)||a.value-b.value);
+}
 function technicalBins(rows,index){
  if(index===7)return focalBins(rows,null);
  const labels=index===4?['≤ ƒ/2','> ƒ/2–2,8','> ƒ/2,8–4','> ƒ/4–5,6','> ƒ/5,6–8','> ƒ/8']:index===5?['≤ 1/1000 s','> 1/1000–1/500 s','> 1/500–1/125 s','> 1/125–1/30 s','> 1/30 s']:['≤ 100','> 100–400','> 400–800','> 800–1600','> 1600–3200','> 3200'];
@@ -131,7 +172,7 @@ function technicalBins(rows,index){
 }
 function focalYears(rows){return distribution(rows,1).map(([year,total])=>({year,total,...focalBins(rows.filter(r=>r[1]===year),null)}));}
 
-const api={resolveGroup,compareGroups,technicalBins,focalYears,count,share,filter,distribution,median,focalBins,joint,slow,wide};if(typeof module!=='undefined')module.exports=api;root.PhotoMath=api;
+const api={effectiveGroup,annualComposition,categoryComparison,resolveGroup,compareGroups,technicalBins,focalYears,count,share,filter,distribution,median,focalBins,joint,slow,wide};if(typeof module!=='undefined')module.exports=api;root.PhotoMath=api;
 })(typeof window!=='undefined'?window:globalThis);
 
 </script>
@@ -229,7 +270,7 @@ function renderEvolution(){
  $('other-details').hidden=!others.length||expanded;$('other-summary').textContent=`Consultar los ${others.length} objetivos agrupados en «Otros»`;$('other-list').innerHTML=others.map(makeLegend).join('');
  const omitted=M.count(current.filter(isHidden));
  $('omission').textContent=`${omitted?`EOS 600D: ${fmt(omitted)} archivos de 2016–2017 ocultos solo en estos gráficos; incluidos en fichas, recuentos, rangos focales y comparación A/B. `:''}* 2026 hasta el 10 de octubre. Los huecos sin archivos no se representan como años de uso. Colores y nombres de objetivos estables en todas las vistas.`;
- renderFocalEvolution();
+ renderFocalEvolution();renderExtraEvolution();
  $('timeline-table').innerHTML=table(['Cámara','Año','Serie','Categoría','Archivos','Total de la barra','Porcentaje'],timelineDetails.map(r=>r.map((v,i)=>i===4||i===5?fmt(v):esc(v))));
 }
 function hbars(entries,total,color='#5f7c68'){
@@ -250,6 +291,7 @@ function renderDetail(){
  const n=M.count(current), lens=state.lens!==''?D.lenses[+state.lens]:null, foc=M.focalBins(current,lens), joint=M.joint(current);
  const annual=M.distribution(current,1), visible=annual.filter(([y])=>!(state.camera==='0'&&(y===2016||y===2017))), max=Math.max(...visible.map(r=>r[1]),1);
  let html=`<div class="detail-grid"><article class="panel full"><h3>Uso a lo largo del tiempo</h3><p>Recuento de archivos por año · ${esc(scope())}</p><div class="volume-wrap"><div class="volume-chart">${visible.map(([y,c])=>`<div class="volume-column"><span>${fmt(c)}</span><div class="volume-bar" style="height:${100*c/max}px" title="${y}: ${fmt(c)} archivos"></div><span>${y}${y===2026?'*':''}</span></div>`).join('')}</div></div><p class="coverage">* 2026 parcial. ${state.camera==='0'?'2016–2017 ocultos en el gráfico; conservados en la tabla.':''}</p><details><summary>Recuentos anuales y proporciones</summary><div class="table-scroll">${table(['Año','Archivos','% de la selección'],annual.map(([y,c])=>[y,fmt(c),pct(c,n)]))}</div></details></article>`;
+ html+=equipmentPanel(current,0)+equipmentPanel(current,2);
  html+=`<article class="panel"><h3>Modos de exposición</h3><p>% sobre todos los archivos de la selección · n = ${fmt(n)}</p>${hbars(D.modes.map((m,i)=>[modeNames[i],M.count(current.filter(r=>r[3]===i)),modeColors[i]]),n)}<p class="coverage">M no implica ISO manual. «Sin determinar» conserva los códigos ausentes o 0.</p></article>`;
  html+=`<article class="panel"><h3>Distancias focales utilizadas</h3><p>${lens&&lens.min!==lens.max?'Extremos exactos y tres tramos interiores del zoom':'Distribución de focales registradas'} · % con dato</p>${hbars(foc.bins.map(b=>[b.label,b.n]),foc.n,lens?.color)}<p class="coverage">Cobertura: ${fmt(foc.n)} / ${fmt(n)} · Sin dato: ${fmt(foc.missing)}. ${!lens?'Selecciona un zoom para separar sus extremos.':'Los valores fuera del rango nominal se conservan; no se reasignan.'}</p><details><summary>Consultar todas las focales exactas</summary><div class="table-scroll">${exactTable(current,7)}</div></details></article>`;
  html+=distributionPanel('Aperturas utilizadas',current,4)+distributionPanel('Velocidades de obturación',current,5)+distributionPanel('Sensibilidades ISO',current,6);
@@ -267,7 +309,7 @@ function renderTrend(){
  $('trend-chart').innerHTML=`<div class="hbars">${visible.map(r=>`<div class="hrow"><span>${r.y}${r.y===2026?'*':''} <small>${r.valid<30?'· n < 30':''}</small></span><div class="htrack"><div class="hfill" style="width:${100*(r.v||0)/max}%"></div></div><span class="hvalue">${esc(r.v===null?'—':val(r.v,trendMetric))}</span></div>`).join('')}</div><p class="coverage">Escala lineal desde cero; cada barra representa una mediana, no volumen. ${trendMetric===5?'Mayor longitud = mayor tiempo de exposición.':''} * 2026 parcial.</p>`;
  $('trend-table').innerHTML=table(['Año','Mediana','Con dato / total'],data.map(r=>[r.y,esc(r.v===null?'—':val(r.v,trendMetric)),`${fmt(r.valid)} / ${fmt(r.n)}`]));
 }
-function download(){const rows=[['Selección',scope()],['Archivos',M.count(current)],[],['Parámetro','Valor','Archivos','Porcentaje con dato']];for(const i of [3,4,5,6,7]){const valid=M.count(current.filter(r=>r[i]!==null));for(const [v,n] of M.distribution(current,i))rows.push([['','','','Modo','Apertura','Velocidad','ISO','Focal'][i],i===3?modeNames[v]:val(v,i),n,v===null?'':pct(n,valid)]);}const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='mi-fotografia-resumen.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
+function download(){const rows=[['Selección',scope()],['Archivos',M.count(current)],[],['Parámetro','Valor','Archivos','Porcentaje con dato']];for(const i of [0,2,3,4,5,6,7]){const valid=M.count(current.filter(r=>r[i]!==null));for(const [v,n] of M.distribution(current,i))rows.push([['Cámara','','Objetivo','Modo','Apertura','Velocidad','ISO','Focal'][i],i===0?`EOS ${D.cameras[v]}`:i===2?D.lenses[v].name:i===3?modeNames[v]:val(v,i),n,v===null?'':pct(n,valid)]);}const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='mi-fotografia-resumen.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 const blankGroup=()=>({camera:'',lens:'',mode:'',from:2011,to:2026});
 const ab={a:blankGroup(),b:blankGroup(),scale:'percent'};
 const focalColors=['#376884','#5b899d','#87aaad','#b4c3aa','#c8ad72','#aa803f','#765a36'];
@@ -278,8 +320,21 @@ function renderFocalEvolution(){
 }
 function groupScope(s){return [s.camera===''?'Las tres cámaras':`EOS ${D.cameras[+s.camera]}`,s.lens===''?'Todos los objetivos':D.lenses[+s.lens].name,s.mode===''?'Todos los modos':modeNames[+s.mode],`${s.from}–${s.to}`].join(' · ');}
 function groupControls(key,s){
- const fields=[['camera','Cámara',[['','Las tres cámaras'],...D.cameras.map((c,i)=>[i,`Canon EOS ${c}`])]],['lens','Objetivo',[['','Todos los objetivos'],...D.lenses.map(l=>[l.id,l.name])]],['mode','Modo',[['','Todos los modos'],...modeNames.map((m,i)=>[i,m])]],['from','Desde',years.map(y=>[y,`${y}${y===2026?' · parcial':''}`])],['to','Hasta',years.map(y=>[y,`${y}${y===2026?' · parcial':''}`])]];
- return `<fieldset class="ab-group group-${key}"><legend>Grupo ${key.toUpperCase()}</legend><p class="coverage">Condiciones adicionales a los filtros generales</p><div class="ab-fields">${fields.map(([k,label,opts])=>`<label class="field-${k}" for="${key}-${k}">${label}<select id="${key}-${k}" data-group="${key}" data-field="${k}">${opts.map(([v,l])=>`<option value="${v}" ${String(v)===String(s[k])?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`).join('')}</div><p class="coverage">${esc(groupScope(s))}</p></fieldset>`;
+ const effective=M.effectiveGroup(state,s),selected=effective.selection;
+ const labelFor=(k,v)=>k==='camera'?`EOS ${D.cameras[+v]}`:k==='lens'?D.lenses[+v].name:modeNames[+v];
+ const fields=[['camera','Cámara',D.cameras.map((c,i)=>[i,`Canon EOS ${c}`])],['lens','Objetivo',D.lenses.map(l=>[l.id,l.name])],['mode','Modo',modeNames.map((m,i)=>[i,m])],['from','Desde',years.map(y=>[y,y])],['to','Hasta',years.map(y=>[y,y])]];
+ const controls=fields.map(([k,label,opts])=>{
+  const period=k==='from'||k==='to', inherited=!period&&state[k]!=='';
+  const value=period?(effective.conflicts.includes('period')?s[k]:selected[k]):s[k];
+  if(!period)opts=[['',inherited?`${labelFor(k,state[k])} · general`:'Sin restricción adicional'],...opts];
+  const options=opts.map(([v,l])=>{
+   const incompatible=period?(+v<state.from||+v>state.to):inherited&&v!==''&&String(v)!==String(state[k]);
+   const active=String(v)===String(value);
+   return `<option value="${v}" ${active?'selected':''} ${incompatible&&!active?'disabled':''}>${esc(l)}${incompatible?' · fuera del filtro general':''}</option>`;
+  }).join('');
+  return `<label class="field-${k}" for="${key}-${k}">${label}<select id="${key}-${k}" data-group="${key}" data-field="${k}">${options}</select>${period?`<small>Periodo general: ${state.from}–${state.to}</small>`:inherited?'<small>Limitado por el filtro general</small>':''}</label>`;
+ }).join('');
+ return `<fieldset class="ab-group group-${key}"><legend>Grupo ${key.toUpperCase()}</legend><p class="inherited"><strong>Hereda los filtros generales</strong><br>${esc(scope())}</p><div class="ab-fields">${controls}</div>${effective.conflicts.length?'<p class="ab-conflict" role="status">Una condición de este grupo contradice los filtros generales. No hay coincidencias. Elige «Sin restricción adicional», la opción «general» o restablece la comparación.</p>':`<p class="coverage">Selección efectiva: ${esc(groupScope(selected))}</p>`}</fieldset>`;
 }
 function pairedBars(entries,denominators){
  const percent=ab.scale==='percent', max=percent?100:Math.max(1,...entries.flatMap(e=>e.counts));
@@ -288,9 +343,11 @@ function pairedBars(entries,denominators){
 function pairedTable(entries,denominators){return table(['Valor','A · archivos','A · %','B · archivos','B · %','B − A · pp'],entries.map(e=>{const [a,b]=e.counts,[na,nb]=denominators;return [esc(e.label),fmt(a),pct(a,na),fmt(b),pct(b,nb),na&&nb?num(100*b/nb-100*a/na):'—'];}));}
 function renderAB(){
  const c=M.compareGroups(D.rows,state,ab.a,ab.b,D.meta.schema), {groups,totals,states,overlap}=c;
+ $('ab-inherited').innerHTML=`<strong>${fmt(M.count(current))} archivos tras los filtros generales</strong>${esc(scope())}. A y B parten siempre de este conjunto.`;
  $('ab-controls').innerHTML=groupControls('a',states[0])+groupControls('b',states[1]);
- $('ab-summary').innerHTML=totals.map((n,i)=>`<div class="ab-stat group-${i?'b':'a'}"><span>GRUPO ${i?'B':'A'}</span><strong>${fmt(n)}</strong><span>archivos · ${pct(n,D.meta.total)} del archivo</span>${n?'':'<p>Sin archivos. Revisa los filtros de este grupo y los filtros comunes.</p>'}</div>`).join('')+`<div class="ab-overlap"><strong>${fmt(overlap)} archivos compartidos</strong><br>${pct(overlap,totals[0])} de A · ${pct(overlap,totals[1])} de B<br>${states[0].from===states[1].from&&states[0].to===states[1].to?'Mismo intervalo temporal.':'Intervalos temporales diferentes.'}</div>`;
+ $('ab-summary').innerHTML=totals.map((n,i)=>`<div class="ab-stat group-${i?'b':'a'}"><span>GRUPO ${i?'B':'A'}</span><strong>${fmt(n)}</strong><span>archivos · ${pct(n,D.meta.total)} del archivo</span>${n?'':'<p>Sin archivos. Revisa los filtros de este grupo y los filtros comunes.</p>'}</div>`).join('')+`<div class="ab-overlap"><strong>${fmt(overlap)} archivos compartidos</strong><br>${pct(overlap,totals[0])} de A · ${pct(overlap,totals[1])} de B<br>${M.effectiveGroup(state,states[0]).selection.from===M.effectiveGroup(state,states[1]).selection.from&&M.effectiveGroup(state,states[0]).selection.to===M.effectiveGroup(state,states[1]).selection.to?'Mismo intervalo temporal efectivo.':'Intervalos temporales efectivos diferentes.'}</div>`;
  let html=`<article class="panel full"><h3>Resumen de los dos grupos</h3><p>Medianas ponderadas por archivos · n indica los archivos con dato en cada parámetro. En móvil, desliza la tabla para ver ambos grupos.</p><div class="table-scroll">${table(['Métrica','Grupo A','Grupo B'],[['Archivos',...totals.map(fmt)],...[[4,'Apertura mediana'],[5,'Velocidad mediana'],[6,'ISO mediano'],[7,'Focal mediana']].map(([i,label])=>[label,...groups.map(g=>{const v=M.median(g,i);return `${v===null?'—':esc(val(v,i))} <small>· n = ${fmt(M.count(g.filter(r=>r[i]!==null)))}</small>`;})])])}</div></article>`;
+ html+=equipmentComparison(groups,totals,0)+equipmentComparison(groups,totals,2);
  for(const [i,title] of [[4,'Aperturas'],[5,'Velocidades de obturación'],[6,'Sensibilidades ISO'],[7,'Distancias focales']]){
   const dist=groups.map(g=>M.technicalBins(g,i)), denominators=dist.map(d=>d.n), entries=dist[0].bins.map((b,k)=>({label:b.label,counts:dist.map(d=>d.bins[k].n)}));
   const exact=groups.map(g=>new Map(M.distribution(g,i))), values=[...new Set(exact.flatMap(m=>[...m.keys()]))].filter(v=>v!==null).sort((a,b)=>a-b), exactEntries=values.map(v=>({label:val(v,i),counts:exact.map(m=>m.get(v)||0)}));
@@ -303,7 +360,7 @@ function renderAB(){
  $('ab-results').innerHTML=html;$('download-compare').disabled=!totals.some(Boolean);
 }
 function saveCSV(rows,name){const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
-function downloadAB(){const {groups,states,totals,overlap}=M.compareGroups(D.rows,state,ab.a,ab.b,D.meta.schema),rows=[['Filtros generales',scope()],['Grupo A',groupScope(states[0])],['Grupo B',groupScope(states[1])],['Archivos A',totals[0]],['Archivos B',totals[1]],['Archivos compartidos',overlap],[],['Parámetro','Valor','A archivos','A % con dato','B archivos','B % con dato']];for(const [i,label] of [[1,'Año (% del grupo)'],[3,'Modo'],[4,'Apertura'],[5,'Velocidad'],[6,'ISO'],[7,'Focal física']]){const maps=groups.map(g=>new Map(M.distribution(g,i))),valid=groups.map(g=>M.count(g.filter(r=>r[i]!==null))),values=[...new Set(maps.flatMap(m=>[...m.keys()]))].sort((a,b)=>a===null?1:b===null?-1:a-b);for(const v of values)rows.push([label,i===3?modeNames[v]:val(v,i),...maps.flatMap((m,j)=>[m.get(v)||0,v===null?'':pct(m.get(v)||0,valid[j])])]);}saveCSV(rows,'mi-fotografia-comparacion-ab.csv');}
+function downloadAB(){const {groups,states,totals,overlap}=M.compareGroups(D.rows,state,ab.a,ab.b,D.meta.schema),rows=[['Filtros generales',scope()],['Grupo A',groupScope(states[0])],['Grupo B',groupScope(states[1])],['Archivos A',totals[0]],['Archivos B',totals[1]],['Archivos compartidos',overlap],[],['Parámetro','Valor','A archivos','A % con dato','B archivos','B % con dato']];for(const [i,label] of [[0,'Cámara'],[2,'Objetivo'],[1,'Año (% del grupo)'],[3,'Modo'],[4,'Apertura'],[5,'Velocidad'],[6,'ISO'],[7,'Focal física']]){const maps=groups.map(g=>new Map(M.distribution(g,i))),valid=groups.map(g=>M.count(g.filter(r=>r[i]!==null))),values=[...new Set(maps.flatMap(m=>[...m.keys()]))].sort((a,b)=>a===null?1:b===null?-1:a-b);for(const v of values)rows.push([label,i===0?`EOS ${D.cameras[v]}`:i===2?D.lenses[v].name:i===3?modeNames[v]:val(v,i),...maps.flatMap((m,j)=>[m.get(v)||0,v===null?'':pct(m.get(v)||0,valid[j])])]);}saveCSV(rows,'mi-fotografia-comparacion-ab.csv');}
 $('ab-controls').addEventListener('change',e=>{const {group,field}=e.target.dataset;if(!group)return;const s=ab[group];s[field]=['from','to'].includes(field)?+e.target.value:e.target.value;if(field==='from'&&s.from>s.to)s.to=s.from;if(field==='to'&&s.to<s.from)s.from=s.to;renderAB();$(group+'-'+field).focus();});
 $('ab-scale').addEventListener('change',e=>{ab.scale=e.target.value;renderAB();});
 $('copy-a').addEventListener('click',()=>{ab.b={...ab.a};renderAB();});
@@ -325,6 +382,36 @@ $('outside').addEventListener('click',()=>{$('outside-table').hidden=!$('outside
 const tip=$('tooltip');function hideTip(){tip.hidden=true;}function showTip(el,x,y){tip.textContent=el.dataset.tip;tip.hidden=false;const rect=tip.getBoundingClientRect();tip.style.left=Math.max(8,Math.min(x+14,window.innerWidth-rect.width-8))+'px';tip.style.top=Math.max(8,Math.min(y+14,window.innerHeight-rect.height-8))+'px';}
 document.addEventListener('pointermove',e=>{const el=e.target.closest('[data-tip]');if(el)showTip(el,e.clientX,e.clientY);else hideTip();});document.addEventListener('focusin',e=>{const el=e.target.closest('[data-tip]');if(el){const r=el.getBoundingClientRect();showTip(el,r.x,r.y);}else hideTip();});document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip();});window.addEventListener('scroll',hideTip,{passive:true});
 sync();render();
+
+function equipmentPanel(rows,index){
+ const n=M.count(rows),title=index===0?'Archivos por cámara':'Archivos por objetivo';
+ const entries=M.categoryComparison([rows],index).map(e=>[index===0?`EOS ${D.cameras[e.value]}`:D.lenses[e.value].name,e.counts[0]]);
+ const shown=index===0?entries:entries.slice(0,8),rest=entries.slice(shown.length);
+ return `<article class="panel equipment-chart" data-chart="detail-${index===0?'cameras':'lenses'}"><h3>${title}</h3><p>Recuento y % de la selección · ${fmt(n)} archivos${rest.length?' · ocho objetivos más utilizados':''}</p>${hbars(shown,n)}${rest.length?`<details><summary>Ver los otros ${rest.length} objetivos · ${fmt(rest.reduce((s,e)=>s+e[1],0))} archivos</summary>${hbars(rest,n)}</details>`:''}<details><summary>Recuentos completos</summary><div class="table-scroll">${table([index===0?'Cámara':'Objetivo','Archivos','% selección'],entries.map(([label,count])=>[esc(label),fmt(count),pct(count,n)]))}</div></details></article>`;
+}
+function equipmentComparison(groups,totals,index){
+ const title=index===0?'Cámaras de A y B':'Objetivos de A y B';
+ const entries=M.categoryComparison(groups,index).map(e=>({label:index===0?`EOS ${D.cameras[e.value]}`:D.lenses[e.value].name,counts:e.counts}));
+ const shown=index===0?entries:entries.slice(0,8),rest=entries.slice(shown.length);
+ return `<article class="panel equipment-chart" data-chart="compare-${index===0?'cameras':'lenses'}"><h3>${title}</h3><p>Recuentos y % del total de cada grupo · mismas categorías y escala${rest.length?' · orden por volumen conjunto de A y B':''}.</p>${entries.length?pairedBars(shown,totals):'<p>No hay archivos en ninguno de los dos grupos.</p>'}${rest.length?`<details><summary>Ver los otros ${rest.length} objetivos</summary>${pairedBars(rest,totals)}</details>`:''}<details><summary>Recuentos y diferencias de todos los equipos</summary><div class="table-scroll">${pairedTable(entries,totals)}</div></details></article>`;
+}
+function annualPanel(index,title,labels,colors){
+ const data=M.annualComposition(current,index),valid=data.reduce((s,r)=>s+r.n,0),missing=data.reduce((s,r)=>s+r.missing,0);
+ const defaultLabels=data[0]?.bins.map(b=>b.label)||[],names=labels||defaultLabels;
+ const bars=data.map(r=>`<div class="annual-column"><small>${fmt(r.n)}</small><div class="annual-stack">${r.bins.map((b,i)=>b.n?`<span tabindex="0" class="annual-segment" style="height:${100*b.n/r.n}%;background:${colors[i]}" data-tip="${esc(`${r.year} · ${names[i]}\n${fmt(b.n)} / ${fmt(r.n)} · ${pct(b.n,r.n)}`)}" aria-label="${esc(`${r.year}, ${names[i]}, ${fmt(b.n)} archivos, ${pct(b.n,r.n)}`)}"></span>`:'').join('')}</div>${r.year}${[2011,2026].includes(r.year)?'*':''}</div>`).join('');
+ return `<article class="panel annual-panel" data-chart="annual-${index}"><h3>${title}</h3><p>Composición anual al 100 % · cifras sobre las barras: archivos incluidos. Desliza para ver todos los años.</p><div class="annual-key">${names.map((name,i)=>`<span><i style="background:${colors[i]}"></i>${esc(name)}</span>`).join('')}</div>${valid?`<div class="annual-scroll"><div class="annual-chart" aria-label="${esc(title)}">${bars}</div></div>`:'<p>No hay datos disponibles para esta selección.</p>'}<p class="coverage">Incluidos: ${fmt(valid)} / ${fmt(M.count(current))} · Sin dato: ${fmt(missing)}. ${index===9?'«Sin puntuación» es el valor nulo del catálogo, incluido como categoría; cero explícito se conserva aparte.':'Se excluyen del porcentaje solo los datos ausentes.'} * Años parciales; huecos sin archivos omitidos.</p><details><summary>Recuentos y porcentajes por año</summary><div class="table-scroll">${table(['Año','Categoría','Archivos','%','Incluidos / total','Sin dato'],data.flatMap(r=>r.bins.map((b,i)=>[r.year,esc(names[i]),fmt(b.n),pct(b.n,r.n),`${fmt(r.n)} / ${fmt(r.total)}`,fmt(r.missing)])))}</div></details></article>`;
+}
+function lensModePanel(){
+ const rows=M.categoryComparison([current],2),n=M.count(current);
+ const entries=rows.map(e=>{const subset=current.filter(r=>r[2]===e.value);return {lens:e.value,total:e.counts[0],counts:modeNames.map((_,i)=>M.count(subset.filter(r=>r[3]===i)))};});
+ return `<article class="panel full" data-chart="lens-modes"><h3>Modos de exposición según el objetivo</h3><p class="chart-explanation">Cruce real de modo y objetivo dentro de los filtros actuales. Cada fila suma el 100 % de los archivos de ese objetivo; permite comparar hábitos sin confundirlos con su volumen de uso.</p>${n?`<div class="table-scroll"><table class="lens-modes"><thead><tr><th scope="col">Objetivo</th><th scope="col">Archivos</th>${D.modes.map(m=>`<th scope="col">${esc(m)}</th>`).join('')}</tr></thead><tbody>${entries.map(e=>`<tr><th scope="row">${esc(D.lenses[e.lens].name)}</th><td>${fmt(e.total)}</td>${e.counts.map(c=>`<td style="background:rgba(63,105,77,${c?.08+.75*c/e.total:0});color:${c/e.total>.55?'white':'#24342f'}">${pct(c,e.total)}<small>${fmt(c)}</small></td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p>No hay archivos para esta selección.</p>'}<p class="coverage">${fmt(n)} archivos. Incluye modos sin determinar; M no implica ISO manual. La asociación no demuestra que el objetivo cause la elección del modo.</p></article>`;
+}
+function renderExtraEvolution(){
+ const technicalColors=['#275e69','#639b9d','#b49728','#b77a50','#8d5080','#b6bdb6'];
+ $('extra-evolution').innerHTML=annualPanel(0,'Cámaras utilizadas por año',D.cameras.map(c=>`EOS ${c}`),['#4b6d91','#52765b','#b77a50'])+
+ annualPanel(4,'Aperturas por año',null,technicalColors)+annualPanel(5,'Velocidades de obturación por año',null,technicalColors)+annualPanel(6,'Sensibilidades ISO por año',null,technicalColors)+
+ (hasRating?annualPanel(9,'Valoraciones por año',['Sin puntuación','0 explícito','1 ★','2 ★','3 ★','4 ★','5 ★'],['#d6dcd3','#aeb9a6','#b6c8ad','#91ac84','#6f945f','#527641','#31562a']):'<article class="panel"><h3>Valoraciones por año</h3><p>Las estrellas no están disponibles en esta exportación.</p></article>')+lensModePanel();
+}
 
 </script>
 </body></html>
