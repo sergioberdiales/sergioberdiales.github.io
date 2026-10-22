@@ -49,6 +49,8 @@
 
 .rating-subheading{font-size:13px;font-weight:600;margin:12px 0 0;position:sticky;left:0;width:fit-content;max-width:100%}.rating-subheading span{font-size:12px;font-weight:400;color:var(--muted)}.rating-line-svg{margin-bottom:20px}
 
+.rating-svg .rating-value-label{font-size:11px;font-weight:500;fill:#39473f;paint-order:stroke;stroke:white;stroke-width:3px;stroke-linejoin:round}.rating-label-guide{stroke:#b6bfb8;stroke-width:1}
+
 </style>
 
 </head>
@@ -448,11 +450,19 @@ function ratingPlot(){
  const lineHeight=100,lineBase=top+lineHeight,lineY=p=>lineBase-lineHeight*p/100;
  const lineGrid=[0,50,100].map(p=>`<line x1="${left}" x2="${width-right}" y1="${lineY(p)}" y2="${lineY(p)}" stroke="${p?'#e3e7e0':'#93a28f'}"/><text x="${left-9}" y="${lineY(p)+4}" text-anchor="end">${p} %</text>`).join('');
  const grid=Array.from({length:5},(_,i)=>i*barMax/4).map(p=>`<line x1="${left}" x2="${width-right}" y1="${y(p)}" y2="${y(p)}" stroke="${p?'#e3e7e0':'#93a28f'}"/><text x="${left-9}" y="${y(p)+4}" text-anchor="end">${p.toLocaleString('es-ES',{maximumFractionDigits:4})} %</text>`).join('');
+ const placedLabels=[];
  const bars=data.map((r,i)=>{
   const barWidth=16,start=x(i)-selected.length*20/2;
   return selected.map((star,j)=>{
    const n=r.stars[star-1],percent=r.percentages[star-1],tip=`${r.year} · ${star} ★\n${fmt(n)} / ${fmt(r.total)} archivos · ${pct(n,r.total)}`;
-   return `<g class="rating-bar" tabindex="0" role="img" aria-label="${esc(tip)}" data-tip="${esc(tip)}" data-year="${r.year}" data-star="${star}" data-count="${n}" data-total="${r.total}" data-percent="${percent}"><rect x="${start+j*20+2}" y="${y(percent)}" width="${barWidth}" height="${height*percent/barMax}" fill="${ratingColors[star-1]}"/><rect x="${start+j*20}" y="${Math.min(y(percent),base-5)}" width="20" height="${Math.max(5,height*percent/barMax)}" fill="transparent"/><text class="rating-star-label" x="${start+j*20+10}" y="${base+16}" text-anchor="middle">${star}</text></g>`;
+   const label=n===0?'0%':percent<.1?'<0,1%':`${percentFormat.format(percent)}%`;
+   const labelX=start+j*20+10,labelWidth=label.length*7;
+   let labelY=y(percent)-8,collision;
+   // Lift adjacent labels when small bars end at nearly the same height.
+   while((collision=placedLabels.find(p=>Math.abs(p.x-labelX)<(p.width+labelWidth)/2+3&&Math.abs(p.y-labelY)<15)))labelY=collision.y-15;
+   placedLabels.push({x:labelX,y:labelY,width:labelWidth});
+   const valueLabel=`${labelY<y(percent)-10?`<line class="rating-label-guide" x1="${labelX}" x2="${labelX}" y1="${y(percent)-2}" y2="${labelY+3}"/>`:''}<text class="rating-value-label" x="${labelX}" y="${labelY}" text-anchor="middle">${esc(label)}</text>`;
+   return `<g class="rating-bar" tabindex="0" role="img" aria-label="${esc(tip)}" data-tip="${esc(tip)}" data-year="${r.year}" data-star="${star}" data-count="${n}" data-total="${r.total}" data-percent="${percent}"><rect x="${start+j*20+2}" y="${y(percent)}" width="${barWidth}" height="${height*percent/barMax}" fill="${ratingColors[star-1]}"/><rect x="${start+j*20}" y="${Math.min(y(percent),base-5)}" width="20" height="${Math.max(5,height*percent/barMax)}" fill="transparent"/><text class="rating-star-label" x="${start+j*20+10}" y="${base+16}" text-anchor="middle">${star}</text>${valueLabel}</g>`;
   }).join('');
  }).join('');
  // Leave gaps in the line where an entire calendar year is absent.
